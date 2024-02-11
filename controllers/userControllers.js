@@ -162,6 +162,9 @@ const showloginpage = (req, res) => {
     res.sendFile(path.resolve("views/loginEcommerce.html"))
 }
 
+
+
+
 module.exports = {
     homepage,
     showproducts,

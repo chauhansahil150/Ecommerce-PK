@@ -8,12 +8,13 @@ server.use(express.urlencoded())
 server.use(express.static("public/"))
 
 const userRoutes = require("./routes/userRoutes");
+const sellerRoutes = require("./routes/sellerRoutes.js")
 server.use((req,res,next)=>{
     console.log(req.url + "  " + req.method);
     next();
 })
 server.use("/",userRoutes)
-
+server.use("/seller",sellerRoutes)
 connectToDatabase()
     .then(res => {
         console.log(res);

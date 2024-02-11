@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sellersignup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .container form {
+            width: 50%;
+            padding: 20px;
+            box-shadow: 0px 0px 3px grey;
+        }
+
+        .container form>h1 {
+            padding: 5px;
+            text-align: center;
+        }
+
+
+
+        .form {
+            width: 100%;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            /* background-color: aqua; */
+            /* box-shadow: 0px 0px 3px grey; */
+            grid-gap: 10px;
+            text-align: left;
+        }
+
+        .form>input {
+            padding: 5px 8px;
+        }
+
+        .action {
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            /* box-shadow: 0px 0px 3px grey; */
+            width: 100%;
+
+        }
+
+        .action>button {
+            padding: 10px 15px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <form id="form">
+            <h1>signup form</h1>
+            <div class="form">
+                <label for="">Name </label>
+                <input type="text" id="name" name="name">
+                <label for="">EMAIL</label>
+                <input type="text" id="email" name="email">
+
+                <label for="">PASSWORD</label>
+                <input type="password" id="password" name="password">
+                <label for="">ADHAR CARD</label>
+                <input type="text" id="adharnumber" name="adharnumber">
+
+                <label for="">ADHAR IMAGE</label>
+                <input type="text" id="adharimg" name="adharimg">
+                <label for="">PAN CARD</label>
+                <input type="text" id="pannumber" name="pannumber">
+
+                <label for="">PAN IMAGE</label>
+                <input type="text" id="panimage" name="panimage">
+                <label for="">ADRESSLINE1</label>
+                <input type="text" id="adressline1" name="adressline1">
+
+                <label for="">ADRESS LINE2</label>
+                <input type="text" id="adressline2" name="ADRESSLINE2">
+                <label for="">CITY</label>
+                <input type="text" id="city">
+
+                <label for="">COUNTRY</label>
+                <input type="text" id="country" name="country">
+                <label for="">STATE</label>
+                <input type="text" id="state" name="state">
+
+                <label for="">PINCODE</label>
+                <input type="text" id="pincode" name="pincode">
+                <label for="">PHONE NUMBER</label>
+                <input type="text" id="phonenumber" name="phonenumber">
+            </div>
+            <div class="action">
+                <button type="submit"> signup</button>
+                <a href=""> LOGIN HERE</a>
+            </div>
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById("form");
+        const name = document.getElementById("name");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const adharnumber = document.getElementById("adharnumber");
+        const adharimg = document.getElementById("adharimg");
+        const pannumber = document.getElementById("pannumber");
+        const panimage = document.getElementById("panimage");
+        const adressline1 = document.getElementById("adressline1");
+        const adressline2 = document.getElementById("adressline2");
+        const city = document.getElementById("city");
+        const state = document.getElementById("state");
+        const pincode = document.getElementById("pincode");
+        const phonenumber = document.getElementById("phonenumber");
+
+        const formdata = {
+            name: name.value,
+            email: email.value,
+            password: password.value,
+            adharnumber: adharnumber.value,
+            adharimg: adharimg.value,
+            pannum: pannumber.value,
+            panima: panimage.value,
+            adressline1: adressline1.value,
+            adressline2: adressline2.value,
+            city: city.value,
+            state: state.value,
+            pincode: pincode.value,
+            phonenumber: phonenumber.value
+        }
+
+        console.log(formdata);
+        console.log(name);
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+         
+            fetch("/seller/signup", {
+                method: "POST",
+                headers: {
+                    "content-type": "apllication/JSON"
+                },
+                body: JSON.stringify(formdata)
+            }).then((data) => {
+                if (data.ok)
+                    console.log("recieve successfully okay");
+
+            }).catch((err) => {
+                console.log(err);
+
+            });
+
+        })
+
+    </script>
+
+</body>
+
+</html>
