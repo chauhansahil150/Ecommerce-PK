@@ -82,7 +82,7 @@ fetch("/products")
     .then((result) => {
         return result.json();
     }).then((data) => {
-        console.log('data');
+        console.log(data);
         array=data;
         // console.log(data);
         data.forEach(p => {
