@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cart</title>
+    <style>
+        *root {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .detailcontainer {
+            width: 100%;
+            height: 75vh;
+            /* background-color: black; */
+            overflow: scroll;
+        }
+
+        .c_body {
+            width: 100vw;
+            height: 100vh;
+            /* background-color: aqua; */
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .label {
+            width: 100%;
+            height: 10%;
+            /* background-color:rgb(251, 247, 247); */
+            border-radius: 10px;
+            display: flex;
+            margin-top: 50px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            margin-top: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #031927;
+            /* Light blue color */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            display: inline-block;
+        }
+
+        .cl_container {
+            width: 95%;
+            height: 20%;
+            border-radius: 3px;
+            margin-top: 40px;
+            display: flex;
+            box-shadow: 0px 0px 2px rgb(39, 38, 38);
+            background-color: rgb(248, 249, 250);
+            font-size: x-large;
+            font-family: Georgia, 'Times New Roman', Times, serif
+        }
+
+        .c_items {
+            width: 85%;
+            height: 100%;
+            /* background-color: antiquewhite; */
+            display: flex;
+            align-items: center;
+        }
+
+        .c_img {
+            width: 150px;
+            height: 100%;
+            /* background-color: black; */
+            margin: 0px 9px 0px 0px;
+        }
+
+        img {
+            width: 140px;
+            height: 100px;
+            border-radius: 50%;
+            /* background-color: rgb(186, 178, 178); */
+
+        }
+
+        .c_name {
+            width: 190px;
+            height: 100%;
+            /* background-color: rgb(198, 8, 8); */
+            margin: 0px 9px 0px 0px;
+            display: flex;
+            align-items: center;
+            font-size: large;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            justify-content: center;
+
+        }
+
+        .quantity {
+            width: 130px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            margin: 0px 9px 0px 0px;
+            background-color: rgba(245, 247, 248, 0.5);
+            /* Transparent blue */
+            box-shadow: 1px 2px 40px rgb(238, 238, 243);
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .left {
+            width: 40px;
+            /* background-color: rgb(17, 112, 196); */
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .right {
+            width: 40px;
+            height: 100%;
+            /* background-color: blue; */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0px 9px 0px 0px;
+        }
+
+        .positivebtn,
+        .negativebtn {
+            /* background-color: aqua; */
+            width: 100%;
+            height: 50%;
+            font-size: large;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .positivebtn {
+            width: 100%;
+            /* background-color: #033353; */
+            margin-top: 20px;
+            padding: 5px;
+
+
+        }
+
+        .negativebtn {
+            width: 100%;
+            /* background-color: #c71849; */
+            margin-bottom: 20px;
+            padding: 5px;
+
+        }
+
+        #p_btn {
+            height: 20px;
+            width: 20px;
+            margin-top: 9px;
+
+        }
+
+        #n_btn {
+            height: 20px;
+            width: 20px;
+            margin-bottom: 9px;
+        }
+
+        /* Basic button styling */
+        button {
+            display: inline-block;
+            padding: 2px 4px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0px 0px px grey;
+            /* Border color */
+            border-radius: 3px;
+            color: #fff;
+            /* Text color */
+            background-image: linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74));
+            /* Background color */
+
+        }
+
+        /* Hover effect */
+        button:hover {
+            background-color: #75b400;
+            /* Darker background color on hover */
+        }
+
+        .c_price {
+            /* background-color: rgb(222, 13, 73); */
+            width: 150px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .delbtn {
+            width: 10%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+        }
+
+        .sum_container {
+            width: 100%;
+            height: 25vh;
+            /* background-color: #fff; */
+            display: flex;
+            justify-content: end;
+            margin-top: 2%;
+        }
+
+        .datasumcontainer {
+            width: 50vh;
+            height: 50%;
+            box-shadow: 0px 1px 4px rgb(119, 119, 124);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            /* background-color: rgb(149, 139, 145); */
+            border-radius: 30px;
+        }
+
+        #totalprice {
+            /* background-color: rgb(123, 0, 68); */
+            width: 30%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: x-large;
+            overflow: hidden;
+        }
+
+        #order_btn {
+            /* background-color: rgb(76, 224, 22); */
+            width: 50%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #sum_orderbtn {
+            font-size: x-large;
+            border: none;
+            box-shadow: 0px 2px 4px #0f3650;
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+    <div class="c_body">
+        <div class="detailcontainer">
+            <div class="label">
+                <h1>YOUR SHOPPING CART</h1>
+            </div>
+            <div id="cart_container">
+
+            </div>
+
+        </div>
+        <div class="sum_container">
+            <div class="datasumcontainer">
+                <div id="totalprice">
+                    <p id="t_price">37647</p>
+                </div>
+                <div id="order_btn"><button id="sum_orderbtn">Place order</button>
+                </div>
+            </div>
+        </div>
+</body>
+<script>
+    let cartArr = []
+    function getCartdata() {
+        fetch("/cart", {
+            method: "GET",
+            headers: {
+                "content-type": "apllication/JSON",
+                'authorization': localStorage.getItem("token")
+            }
+        }).then(result => {
+            if (result.status == 200) {
+                return result.json();
+            }
+        }).then((data) => {
+            let t_price = 0
+            data.forEach(cart => {
+                t_price += cart.quantity * cart.price
+                createcartitem(cart);
+                cartArr.push(cart)
+            });
+            document.getElementById("t_price").innerText = t_price
+        })
+    }
+    getCartdata()
+
+    function createcartitem(cart) {
+        const container = document.createElement("div");
+        container.className = "cl_container";
+        container.id = `cont${cart.p_id}`
+        container.innerHTML = `<div class="c_items">
+                                <div class="c_img">
+                                    <img src="${cart.image}" alt="" />
+                                </div>
+                                <div class="c_name">${cart.name}</div>
+                                <div class="quantity">
+                                    <div class="left">
+                                        <p id="quant${cart.p_id}"> ${cart.quantity}</p>
+                                    </div>
+                                    <div class="right">
+                                        <div class="positivebtn"> <button onclick ='pclick("${cart.p_id}",${cart.price})' >+</button></div>
+                                        <div class="negativebtn"><button onclick='nclick("${cart.p_id}",${cart.price})'>-</button></div>
+                                    </div>
+                                </div>
+                                <div class="c_price"  id="price${cart.p_id}">${cart.price * cart.quantity}</div>
+                            </div>
+                            <div class="delbtn" onclick='deleteCart("${cart.p_id}")'> <button>X</button></div>`;
+        document.getElementById("cart_container").appendChild(container);
+    }
+
+    function pclick(id, price) {
+        const q = Number(document.getElementById("quant" + id).innerText) + 1
+        changeQuantity(id, price, q)
+    }
+
+    function nclick(id, price) {
+        const q = Number(document.getElementById("quant" + id).innerText) - 1
+        changeQuantity(id, price, q)
+    }
+
+    async function changeQuantity(id, price, quantity) {
+        if (quantity > 5 || quantity < 1) {
+            alert("Quantity limit reached")
+            return
+        }
+        try {
+
+            const res = await fetch("/cart?pid=" + id + "&quant=" + quantity, {
+                method: "PATCH",
+                headers: {
+                    "authorization": localStorage.getItem("token")
+                }
+            })
+            if (!res.ok) {
+                alert("Something went wrong")
+                return
+            }
+        } catch (error) {
+            console.log(error);
+            alert(error)
+            return
+        }
+        const index = cartArr.findIndex(cart => cart.p_id == id)
+        if (index < 0) {
+            return
+        }
+        cartArr[index].quantity = quantity
+        let total_price = 0
+        cartArr.forEach(cart => {
+            total_price += (cart.price * cart.quantity)
+        })
+        document.getElementById("quant" + id).innerText = quantity
+        document.getElementById("price" + id).innerText = quantity * price
+        document.getElementById("t_price").innerText = total_price
+    }
+
+    async function deleteCart(id) {
+        try {
+            const res = await fetch("/cart?pid=" + id, {
+                method: "DELETE",
+                headers: {
+                    "authorization": localStorage.getItem("token")
+                }
+            })
+            if (res.ok) {
+                alert("Product deleted from cart")
+            } else {
+                alert("Something went wrong")
+            }
+            document.getElementById("cont" + id).remove()
+        } catch (error) {
+            alert(error)
+            console.log(error);
+        }
+    }
+
+</script>
+
+</html>

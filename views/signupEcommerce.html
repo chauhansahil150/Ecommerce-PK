@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+        }
+        h1{
+            background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));
+            border:none;
+            border-radius: 5px;
+            color:white;
+            width:30%;
+            text-align: center;
+
+        }
+
+        input {
+            box-shadow: 0px 1px 2px grey;
+            border: none;
+            border-radius: 2px;
+        }
+
+        .signupcontainer {
+            margin-top: 80px;
+            width: 50%;
+            height: 60vh;
+            box-shadow: 0px 0px 3px grey;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* padding: 20px 7px; */
+            /* background-color: aqua; */
+        }
+
+        .name,
+        .password,
+        .username,
+        .email,
+        .phone {
+            display: flex;
+            width: 300px;
+            justify-content: space-between;
+            margin: 20px;
+            font-weight: 700;
+            font-size: 110%;
+
+
+            /* background-color: aliceblue; */
+        }
+        .btn{
+            width:10%; 
+        }
+        #signupbtn {
+           background-image: linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74));
+           color:white;
+           border:none;
+           padding:5px;
+           font-weight: bolder;
+           border-radius: 12px; 
+           width:100%;
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+
+    <div class="signupcontainer">
+     <h1>SIGNUP</h1>
+        <div class="name">
+            Name:<input type="text" id="name">
+        </div>
+        <div class="username">
+            Email:<input type="text" id="email">
+        </div>
+        <div class="password">
+            Password:<input type="text" id="password">
+        </div>
+        <div class="phone">
+            Phone No:<input type="text" id="phone">
+        </div>
+        <div class="btn">
+            <button id="signupbtn" onclick="handleSubmit()" style="font-weight: 600;">SIGNUP</button>
+        </div>
+        <div>
+            <a href=""> Already a member?</a>
+        </div>
+    </div>
+
+    <script>
+        const name = document.getElementById("name")
+        const email = document.getElementById("email")
+        const password = document.getElementById("password")
+        const phone = document.getElementById("phone")
+
+
+        function handleSubmit() {
+            fetch("/signup", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/JSON"
+                },
+                body: JSON.stringify({
+                    name: name.value,
+                    email: email.value,
+                    password: password.value,
+                    phone: phone.value
+                })
+            }).then((result) => {
+                console.log(result);
+                if(result.status==403){
+                    alert("duplicate")
+                }
+
+            }).catch((err) => {
+                console.log(err)
+            });
+        }
+    </script>
+
+</body>
+
+</html>

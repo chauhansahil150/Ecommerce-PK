@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .logincontainer {
+            width: 50%;
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0px 0px 3px grey;
+            margin-top: 80px;
+            padding: 10px 17px;
+        }
+
+        .username,
+        .password {
+            display: flex;
+            justify-content: space-between;
+            /* background-color: aliceblue; */
+            margin: 20px;
+            font-weight: 700;
+            /* width:10%; */
+        }
+
+        input {
+            border: none;
+            box-shadow: 1px 1px 2px grey;
+            margin-right: 10px;
+        }
+        .btn{
+            width:10%;
+           
+        }
+        #loginbutton {
+           background-image: linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74));
+           color:white;
+           border:none;
+           padding:5px;
+           font-weight: bolder;
+           border-radius: 12px; 
+           width:100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logincontainer">
+        <H1>LOGIN</H1>
+        <div class="username">
+            Username:<input type="text" name="" id="email"> </div>
+        <div class="password">
+            Password: <input type="text" name="" id="password"> </div>
+        <div class="btn">
+            <button id="loginbutton" >LOGIN</button>
+        </div>
+        <div class="signup">
+            <a href="">Create Account Signup</a>
+        </div>
+    </div>
+</body>
+      
+
+<script>
+    document.getElementById("login").addEventListener("click", () => {
+        const email = document.getElementById("email");
+
+        const password = document.getElementById("password");
+        if (email.value == "") {
+            alert("please  enter the email");
+            return
+        }
+        if (password.value == "") {
+            alert("please  enter the password");
+            return
+
+        }
+        fetch("/login",{
+            method:"POST",
+            headers :{
+                "content-type":"application/JSON"
+            },
+            body: JSON.stringify({
+                email:email.value,
+                password:password.value
+            })
+
+        }).then((result) => {
+            if(result.status==404){
+                alert("user not found")
+                return
+            }
+            if(result.status==401){
+                alert("password not match")
+                return
+            }
+            if(result.ok){//status==200
+                return result.json()//token
+            }    
+
+        }).then(t=> {
+                localStorage.setItem("token",t.token)//token ko store krwana //browser 
+                location.href=t.url; // redirect 
+        })
+        .catch((err) => {
+            console.log(err);
+            
+        });
+    })
+</script>
+
+</html>

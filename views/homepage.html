@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>homepage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            width: 100%;
+        }
+
+        .header {
+            width: 100%;
+            height: 14vh;
+            box-shadow: 0px 0px 15px grey;
+            background-color: rgb(253, 251, 248);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+        }
+
+        .upperheader {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            flex-direction: row;
+            font-size: x-large;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .lowerheader {
+            width: 100%;
+            height: 60%;
+            background-color: aliceblue;
+            display: flex;
+            background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));
+        }
+
+        .action {
+            width: 60%;
+            height: 100%;
+            /* background-color: beige; */
+            display: flex;
+            align-items: center;
+
+        }
+
+        .log_con {
+            /* background-color: brown; */
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            margin-left: 140px;
+            height: 100%;
+        }
+
+        #home,
+        #cart,
+        #order {
+            margin: 8px 40px;
+            font-weight: bolder;
+            font-size: 14px;
+            text-decoration: none;
+            color: white;
+            
+
+        }
+
+        #profile,
+        #logout {
+            font-size: 14px;
+            font-weight: bolder;
+
+            margin: 0px 40px;
+            text-decoration: none;
+            color: white;
+        }
+
+        #home:hover,
+        #cart:hover,
+        #order:hover,
+        #profile:hover,
+        #logout:hover {
+            text-decoration: underline;
+            color: darkblue;
+        }
+
+        .container {
+            width: 100%;
+            background-color: rgb(245, 243, 243);
+            display: grid;
+            grid-template-columns: 33% 33% 33%;
+            grid-row-gap: 10px;
+            grid-column-gap: 15px;
+            padding: 19px 10px;
+            position: relative;
+        }
+
+        .productcontainer {
+            border: 1px solid black;
+            padding: 5px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            width: 250px;
+            margin: 10%;
+            border: none;
+            box-shadow: 0px 0px 10px rgb(130, 108, 130);
+
+        }
+
+        .imgcontainer {
+            background-color: beige;
+            height: 65%;
+            width: 100%;
+
+        }
+
+        .imgcontainer>img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .pname,
+        .pprice {
+            display: flex;
+            justify-content: center;
+            align-content: space-between;
+            padding: 1%;
+        }
+
+        .pname {
+            margin-top: 10;
+        }
+
+        .paction {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+
+        .des_button button,
+        .cart_button button {
+
+            border: none;
+            padding: 0.5em;
+            box-shadow: 0px 0px 3px darkgray;
+            background-image: linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74));
+            color: white;
+            font-weight: bold;
+        }
+
+        .popupbox {
+            width: 60%;
+            height: 65%;
+            background-color: rgb(241, 245, 245);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0px 0px 20px grey;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* display: none; */
+            /* border-radius:10%; */
+        }
+
+        .popuplabel {
+            width: 100%;
+            height: 10%;
+            background-color: aquamarine;
+            border-bottom: 2px solid grey;
+            box-shadow: 0px 0px 2px slategrey;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            padding: 0px 10px;
+        }
+
+        .popupdescontainer {
+            width: 100%;
+            height: 90%;
+            background-color: rgb(256, 256, 256);
+            display: flex;
+        }
+
+        .popupleft {
+            height: 100%;
+            width: 60%;
+            object-fit: contain;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+
+        #popupbtn {
+            margin-top: 12px;
+            border-radius: 50%;
+            background: none;
+            border: none;
+            font-size: x-large;
+            font-weight: 700;
+            color: rgb(53, 52, 52);
+        }
+
+        .popupright {
+            height: 100%;
+            width: 40%;
+            border-left: 2px solid grey;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        .right1 {
+            padding: 10px;
+            width: 100%;
+            height: 20%;
+            /* background-color: rgb(0, 59, 147);  */
+        }
+
+        .right2 {
+            padding: 10px;
+            width: 100%;
+            height: 10%;
+            /* background-color: rgb(20, 76, 76); */
+
+        }
+
+        .right3 {
+            padding: 10px;
+            width: 100%;
+            height: 70%;
+            /* background-color: rgb(19, 27, 27); */
+        }
+
+        .product_image {
+            width: 90%;
+            height: 80%;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="upperheader"> WELCOME TO ABC </div>
+
+        <div class="lowerheader">
+            <div class="action">
+                <a href="/" id="home">HOME</a>
+                <a href="/orders" id="order">ORDERS</a>
+                <a href="/carts" id="cart">CART</a>
+            </div>
+
+            <div class="log_con">
+                <div id="profile">USERNAME</div>
+                <a href="" id="logout">LOGOUT</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="container">
+        <div class="productcontainer">
+            <div class="imgcontainer">
+                <img
+                    src="https://image-us.samsung.com/us/smartphones/galaxy-s24/gallery/FNL_Gallery_Base_800x600_Slide_Exclusive_Colors_1.jpg?$product-details-jpg$" />
+            </div>
+            <div class="pname">Iphone16</div>
+            <div class="pprice">100000</div>
+            <div class="paction">
+                <div class="des_button"><button> View description</button></div>
+                <div class="cart_button"><button> Add to cart</button></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="home.js"></script>
+
+</html>
