@@ -129,15 +129,21 @@
         const state = document.getElementById("state");
         const pincode = document.getElementById("pincode");
         const phonenumber = document.getElementById("phonenumber");
+        console.log(name.value);
+       
 
-        const formdata = {
+        // console.log(formdata);
+        // console.log(name);
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const formdata = {
             name: name.value,
             email: email.value,
             password: password.value,
             adharnumber: adharnumber.value,
             adharimg: adharimg.value,
-            pannum: pannumber.value,
-            panima: panimage.value,
+            pannumber: pannumber.value,
+            panimage: panimage.value,
             adressline1: adressline1.value,
             adressline2: adressline2.value,
             city: city.value,
@@ -145,16 +151,11 @@
             pincode: pincode.value,
             phonenumber: phonenumber.value
         }
-
-        console.log(formdata);
-        console.log(name);
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
          
             fetch("/seller/signup", {
                 method: "POST",
                 headers: {
-                    "content-type": "apllication/JSON"
+                    "content-type": "application/JSON"
                 },
                 body: JSON.stringify(formdata)
             }).then((data) => {
