@@ -102,5 +102,9 @@ fetch("/products")
 
     ]);
 
+function logout(){
+    localStorage.removeItem("token");
+    location.href='/login';
+}
 
 function addProducttoCart(){}
