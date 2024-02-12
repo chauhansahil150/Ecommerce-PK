@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .header{
+            height: 80px;
+            background-color: violet;
+            color: white;
+            width: 100%;
+        }
+        .header .upper{
+            height: 60%;
+            display: flex;
+            justify-content:center ;
+            align-items: center;
+            border-bottom: 1px solid whitesmoke;
+        }
+        .header .lower{
+            height: 40%;
+            display: flex;
+            justify-content: space-between;
+            align-items:center;
+            padding-inline: 30px;
+        }
+        .header .lower .lefth, .header .lower .righth{
+            display:flex;
+            gap: 15px;
+        }
+        a{
+            text-decoration: none;
+            color: white;
+            font-weight: bolder
+        }
+            table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top:5%;
+           }
+        
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        .td{
+            padding:10px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            
+          }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="upper">
+            <h2>Admin Panel</h2>
+        </div>
+        <div class="lower">
+            <div class="lefth">
+                <a href="">Home</a>
+                <a href="">Seller Requests</a>
+                <a href="">Products Requests</a>
+                <a href="">Transporters</a>
+                <a href="">Products</a>
+            </div>
+            <div class="righth">
+                <a href="">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <table id="table">
+            <tr>
+              <th>NAME</th>
+              <th>PHONENUMBER </th>
+              <th>CITY </th>
+              <th>ADDRESS line-1 </th>
+              <th>STATE </th>
+              <th>COUNTRY </th>
+              <th>PINCODE </th>
+              <th>ADHAR NUMBER </th>
+              <th>ADHAR IMAGE </th>
+              <th>PAN NUMBER 10</th>
+              <th>PAN IMAGE </th>
+            </tr>
+           
+          </table>
+          
+          </body>
+          </html>
+
+
+    </div>
+
+    <script>
+      function sellerDataCard(seller){
+        const table=document.getElementById('table');
+        const tableData=document.createElement('tr');
+
+        tableData.id="tabledata";
+        tableData.innerHTML=`
+              <td>${seller.name}</td>
+              <td>${seller.phone}</td>
+              <td>${seller.city}</td>
+              <td${seller.address}td>
+              <td>${seller.state}</td>
+              <td>${seller.country}</td>
+              <td>${seller.pincode}</td>
+              <td>${seller.adharimage}</td>
+              <td>${seller.pan}</td>
+              <td>${seller.name}</td>
+              <td>${seller.name}</td>
+        `
+      }
+
+      
+
+    </script>
+</body>
+</html>
