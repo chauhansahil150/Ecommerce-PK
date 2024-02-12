@@ -5,7 +5,7 @@ const { v4: uuid } = require("uuid");//
 const jwt = require("jsonwebtoken");
 
 const homepage = (req, res) => {
-    res.sendFile(path.resolve("views/homepage.html"));
+    res.sendFile(path.resolve("views/user/userHomepage.html"));
 }
 
 const loginUser = async (req, res) => {
@@ -67,7 +67,7 @@ const addToCart = async (req, res) => {
 
 const showcartpage = async (req, res) => {
     try {
-        res.sendFile(path.resolve("views/cart.html"));
+        res.sendFile(path.resolve("views/user/userCart.html"));
     } catch (error) {
         console.log(error);
         res.status(500).end();

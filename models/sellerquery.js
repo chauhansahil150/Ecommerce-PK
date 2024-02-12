@@ -27,13 +27,22 @@ function getsellerproductquery(sellerid) {
   });
 }
 
-function updateProductQuery(p_id) {
+function updateProductQuery({name,des,price,stock,p_id}) {
   return new Promise((resolve, reject) => {
-    const qry = `UPDATE products set stock=11 WHERE p_id=?`;
-    sql.query(qry, [p_id], (err, data) => {
+    const qry = `UPDATE products set name=?,des=?,price=?,stock=? WHERE p_id=?`;
+    sql.query(qry, [name,des,price,stock,p_id], (err, data) => {
       err ? reject(err) : resolve(data);
     });
   });
+}
+
+function deleteProductQuery(p_id,u_id){
+  return new Promise((resolve,reject)=>{
+    const qry=`delete from products where p_id="${p_id}" and seller_id="${u_id}"`;
+    sql.query(qry,(err,data)=>{
+      err?reject(err):resolve(data);
+    })
+  })
 }
 
 module.exports = {
@@ -41,4 +50,5 @@ module.exports = {
   savesellerdetailseller,
   getsellerproductquery,
   updateProductQuery,
+  deleteProductQuery
 };

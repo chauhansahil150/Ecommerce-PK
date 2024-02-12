@@ -4,7 +4,8 @@ const {
   savesellerdetailuser,
   savesellerdetailseller,
   getsellerproductquery,
-  updateProductQuery
+  updateProductQuery,
+  deleteProductQuery
 } = require("../models/sellerquery");
 const { fetchProducts } = require("../models/Query");
 const jwt = require("jsonwebtoken");
@@ -68,20 +69,39 @@ const signupSeller = async (req, res) => {
 
 const getsignuppage = async (req, res) => {
   try {
-    res.sendfile(path.resolve("views/sellersignup.html"));
+    res.sendfile(path.resolve("views/seller/sellersignup.html"));
   } catch (error) {
     console.log(error);
     res.status(500).end();
   }
 };
-const getsellerhomepage = async (req, res) => {
+const getsellerhomepage =  (req, res) => {
   try {
-    res.sendfile(path.resolve("views/sellerhomepage.html"));
+    res.sendfile(path.resolve("views/seller/sellerhomepage.html"));
   } catch (err) {
     console.log(err);
     res.status(500).end();
   }
 };
+
+const getAddProductPage=(req,res)=>{
+  try {
+    res.sendfile(path.resolve("views/seller/selleraddproduct.html"));
+
+  } catch (error) {
+    console.log(error);
+
+  }
+}
+const getOrdersPage=(req,res)=>{
+  try {
+    res.sendfile(path.resolve("views/seller/sellerOrders.html"));
+
+  } catch (error) {
+    console.log(error);
+
+  }
+}
 const getsellerproducts = async (req, res) => {
   try {
     var decoded = jwt.verify(req.headers.authorization, "payal");
@@ -94,22 +114,47 @@ const getsellerproducts = async (req, res) => {
   }
 };
 
+
 const updateProduct = async (req, res) => {
   try {
+    const {name,des,price,stock}=req.body;
     const p_id = req.query.p_id;
     var decoded = jwt.verify(req.headers.authorization, "payal");
-    const queryRes = await updateProductQuery(p_id);
+    const queryRes = await updateProductQuery({name,des,price,stock,p_id});
+    console.log(queryRes);
+    if(queryRes.affectedRows>0){
+      res.status(200).end();
+    }
   } catch (error) {
     console.log(error);
     res.status(500).end();
   }
 };
 
+const deleteProduct = async (req, res) => {
+  try {
+    const p_id = req.query.p_id;
+    var decoded = jwt.verify(req.headers.authorization, "payal");
+    const queryRes = await deleteProductQuery(p_id,decoded.u_id);
+    if(queryRes.affectedRows>0){
+      res.status(200).end();
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).end();
+  }
+};
+
+
+
 module.exports = {
   signupSeller,
   getsignuppage,
   getsellerhomepage,
   getsellerproducts,
-  updateProduct
+  updateProduct,
+  deleteProduct,
+  getAddProductPage,
+  getOrdersPage
   
 };
