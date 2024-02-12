@@ -1,4 +1,3 @@
-const { resolve } = require("path");
 const { sql } = require("./db.js");
 
 function savesellerdetailuser(data) {
