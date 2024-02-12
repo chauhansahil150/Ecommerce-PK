@@ -8,13 +8,7 @@
     <style>
         *root {
             font-family: Georgia, 'Times New Roman', Times, serif;
-        }
-
-        .detailcontainer {
-            width: 100%;
-            height: 75vh;
-            /* background-color: black; */
-            overflow: scroll;
+            /* background-color: #0f3650; */
         }
 
         .c_body {
@@ -23,15 +17,24 @@
             /* background-color: aqua; */
             display: flex;
             flex-direction: column;
-
         }
+        .detailcontainer {
+            width: 100%;
+            height: 75vh;
+            /* background-color: black; */
+            overflow: scroll;
+        }
+
 
         .label {
             width: 100%;
             height: 10%;
             /* background-color:rgb(251, 247, 247); */
+            box-shadow:0px 0px 3px grey;
+            /* background-image:linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74)); */
             border-radius: 10px;
             display: flex;
+            background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));
             margin-top: 50px;
             align-items: center;
             justify-content: center;
@@ -41,10 +44,10 @@
             margin-top: 10px;
             font-size: 24px;
             font-weight: bold;
-            color: #031927;
+            color: white;
             /* Light blue color */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
             padding: 10px;
             display: inline-block;
         }
@@ -253,7 +256,7 @@
             align-items: center;
             justify-content: center;
         }
-
+    
         #sum_orderbtn {
             font-size: x-large;
             border: none;

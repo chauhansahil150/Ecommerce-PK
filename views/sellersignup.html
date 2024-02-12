@@ -30,7 +30,11 @@
         .container form>h1 {
             padding: 5px;
             text-align: center;
-        }
+            color:white;
+            /* background-image:linear-gradient(rgb(124, 112, 155)); */
+            background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));
+             text-align: center;
+          }
 
 
 
@@ -47,8 +51,15 @@
 
         .form>input {
             padding: 5px 8px;
+            border:none;
+            box-shadow: 0px 0px 5px grey;
         }
+        label{
+            font-size: 14px;
+            color: dark grey;
 
+        }
+  
         .action {
             padding: 10px;
             display: flex;
@@ -62,6 +73,19 @@
 
         .action>button {
             padding: 10px 15px;
+            border:none;
+            background-image: linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74));
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px
+            
         }
     </style>
 
@@ -71,7 +95,7 @@
 <body>
     <div class="container">
         <form id="form">
-            <h1>signup form</h1>
+            <h1>SELLER SIGNUP FORM</h1>
             <div class="form">
                 <label for="">Name </label>
                 <input type="text" id="name" name="name">
