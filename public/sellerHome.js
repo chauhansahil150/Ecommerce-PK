@@ -8,8 +8,8 @@ function productCard(p) {
                 <img
                     src="${p.image}"/>
             </div>
-            <div class="pname">Product Name:<input type="text" placeholder="Name" value="${p.name} id="pname-${p.p_id}"" ></div>
-            <div class="pdes">Description:<input type="text"placeholder="description" value=">${p.des}" id="pdesc-${p.p_id}"></div>
+            <div class="pname">Product Name:<input type="text" placeholder="Name" value="${p.name}" id="pname-${p.p_id}" ></div>
+            <div class="pdes">Description:<input type="text" placeholder="description" value="${p.des}" id="pdes-${p.p_id}"> </div>
             <div class="pprice">Price:<input type="text"placeholder="Price"  value="${p.price}" id="pprice-${p.p_id}"></div>
             <div class="pstock">Stock:<input type="text"placeholder="Stock" value="${p.stock}" id="pstock-${p.p_id}"></div>
     
@@ -22,24 +22,90 @@ function productCard(p) {
 }
 
 let arr = [];
-fetch("/seller/products",{
-    method:'get',
-    headers:{
-        authorization:localStorage.getItem("token")
-    }
-})
-.then(result=>{
-    return result.json();
-})
-.then(products=>{
-console.log(products);
-arr=products;
+function displayAllProducts(){
+    fetch("/seller/products",{
+        method:'get',
+        headers:{
+            authorization:localStorage.getItem("token")
+        }
+    })
+    .then(result=>{
+        return result.json();
+    })
+    .then(products=>{
+    console.log(products);
+    arr=products;
+    
+    arr.forEach(singleProduct => {
+        productCard(singleProduct)
+    });
+    })
+}
 
-products.forEach(singleProduct => {
-    productCard(singleProduct)
-});
-})
+displayAllProducts();
 
 function updateProduct(id){
-    fetch(`/seller/product?p_id=${id}`,)
+    const name=document.getElementById(`pname-${id}`).value;
+    const des=document.getElementById(`pdes-${id}`).value;
+    const price=document.getElementById(`pprice-${id}`).value;
+    const stock=document.getElementById(`pstock-${id}`).value;
+    console.log(name);
+    console.log(des);
+    console.log(price);
+    console.log(stock);
+    const updatedProduct={
+        name,
+        des,
+        price,
+        stock
+    }
+    console.log(updatedProduct);
+    fetch(`/seller/product?p_id=${id}`,{
+        method:'put',
+        headers:{
+            'content-type':'application/json',
+            authorization:localStorage.getItem("token")
+        },
+        body:JSON.stringify(updatedProduct)
+    })
+    .then(res=>{
+        if(res.status==200){
+            alert('product updated successfully');
+            return;
+        }
+        if(res.status==500){
+            alert('Internal Server Error');
+            return;
+        }
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+}
+
+function deleteProduct(id){
+    const productContainer=document.getElementById(`productcontainer-${id}`)
+    fetch(`/seller/product?p_id=${id}`,{
+        method:'delete',
+        headers:{
+            authorization:localStorage.getItem("token")
+        }
+    }).then(res=>{
+        if(res.status==200){
+            alert('product deleted successfully');
+            productContainer.remove();
+        }
+        if(res.status==500){
+            alert('Internal Server Error');
+            return;
+        }
+        /*const newData=arr.filter(p=>p.p_id!=id);
+        console.log(newData);
+        arr=newData;
+        displayAllProducts();*/
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+
 }

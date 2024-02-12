@@ -5,13 +5,19 @@ const {
   getsignuppage,
   getsellerhomepage,
   getsellerproducts,
-  updateProduct
+  updateProduct,
+  deleteProduct,
+  getAddProductPage,
+  getOrdersPage
 } = require("../controllers/sellerControllers");
 routes.post("/signup", signupSeller);
 routes.get("/signup", getsignuppage);
 
 routes.get("/home", getsellerhomepage);
+routes.get("/addProduct",getAddProductPage);
+routes.get("/orders",getOrdersPage);
 routes.get("/products", getsellerproducts);
-routes.patch("/product", updateProduct);
+routes.put("/product", updateProduct);
+routes.delete("/product", deleteProduct);
 
 module.exports = routes;
