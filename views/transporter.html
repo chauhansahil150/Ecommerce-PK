@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .header {
+            height: 80px;
+            background-color: violet;
+            color: white;
+            width: 100%;
+        }
+
+        .header .upper {
+            height: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid whitesmoke;
+        }
+
+        .header .lower {
+            height: 40%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-inline: 30px;
+        }
+
+        .header .lower .lefth,
+        .header .lower .righth {
+            display: flex;
+            gap: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            font-weight: bolder
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5%;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .td {
+            padding: 10px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="upper">
+            <h2>TRANSPORTER </h2>
+        </div>
+        <div class="lower">
+            <div class="left">
+            </div>
+            <div class="righth">
+                <a onclick="logout()" href="">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <table id="table">
+            <tr>
+                <th>ORDER ID </h>
+                <th>NAME </th>
+                <th>ADRESSLINE1 </th>
+                <th>ADRESSLINE2 </th>
+                <th>STATE </th>
+                <th>COUNTRY </th>
+                <th>PINCODE </th>
+                <th>PHONENUMBER </th>
+                <th>STATUS</th>
+            </tr>
+
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td><select name="status" id="">
+                    <option value="returned">returned</option>
+                    <option value="delivered">delivered</option>
+                </select></td>
+                <td><button>Submit</button></td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td><select name="status" id="">
+                    <option value="returned">returned</option>
+                    <option value="delivered">delivered</option>
+                </select></td>
+                <td><button>Submit</button></td>
+            </tr>            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td><select name="status" id="">
+                    <option value="returned">returned</option>
+                    <option value="delivered">delivered</option>
+                </select></td>
+                <td><button>Submit</button></td>
+            </tr>            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td><select name="status" id="">
+                    <option value="returned">returned</option>
+                    <option value="delivered">delivered</option>
+                </select></td>
+                <td><button>Submit</button></td>
+            </tr>
+        </table>
+</body>
+
+</html>
+</div>
+
+
+</body>
+
+</html>

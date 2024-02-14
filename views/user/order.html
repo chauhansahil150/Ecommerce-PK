@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .order-item {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .order-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-right: 20px;
+      border-radius: 8px;
+    }
+
+    .order-info {
+      flex: 1;
+    }
+
+    .order-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .cancel {
+      background-color: #ff6347;
+      color: white;
+    }
+
+    .description {
+      background-color: #6495ed;
+      color: white;
+    }
+
+    .tracking {
+      background-color: #32cd32;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Order Details</h1>
+  <div class="order-item">
+    <img src="" alt="Product Image">
+    <div class="order-info">
+      <h2>Product Name</h2>
+      <p>Quantity: 1</p>
+      <p>Price: $19.99</p>
+      <div class="order-buttons">
+        <button class="button cancel">Cancel Order</button>
+        <button class="button tracking">Track Order</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
