@@ -5,11 +5,14 @@ const {
   savesellerdetailseller,
   getsellerproductquery,
   updateProductQuery,
-  deleteProductQuery
+  deleteProductQuery,
+  savesellerdetailAddress
 } = require("../models/sellerquery");
 const { fetchProducts } = require("../models/Query");
 const jwt = require("jsonwebtoken");
 const signupSeller = async (req, res) => {
+
+  
   try {
     const id = uuid();
     const {
@@ -58,6 +61,17 @@ const signupSeller = async (req, res) => {
       pincode,
       phonenumber,
       id,
+    });
+    const a_id=uuid();
+    const dataqury3= await savesellerdetailAddress({
+      a_id,
+      id,
+      adressline1,
+      adressline2,
+      city,
+      state,
+      pincode,
+      phonenumber
     });
 
     res.status(200).end();

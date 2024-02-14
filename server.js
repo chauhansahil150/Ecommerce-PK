@@ -19,7 +19,7 @@ connectToDatabase()
     .then(res => {
         console.log(res);
         server.listen(5000, (err) => {
-          //  loadtoDB();
+         // loadtoDB();
             console.log("successfully started");
         })
     }).catch(err => {

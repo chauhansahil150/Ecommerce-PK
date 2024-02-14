@@ -17,6 +17,15 @@ function savesellerdetailseller(data) {
     });
   });
 }
+function savesellerdetailAddress(data){
+  return new Promise((resolve,reject)=>{
+    const qry3=`insert into address values ("${data.a_id}","${data.id}","${data.adressline1}","${data.adressline2}","${data.city}","${data.state}","${data.pincode}","${data.phonenumber}")`
+    sql.query(qry3,(err,data)=>{
+      err? reject(err):resolve(data);
+    })
+ 
+  })
+}
 
 function getsellerproductquery(sellerid) {
   return new Promise((resolve, reject) => {
@@ -50,5 +59,6 @@ module.exports = {
   savesellerdetailseller,
   getsellerproductquery,
   updateProductQuery,
-  deleteProductQuery
+  deleteProductQuery,
+  savesellerdetailAddress
 };
