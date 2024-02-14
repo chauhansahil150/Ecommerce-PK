@@ -1,4 +1,5 @@
 const { sql } = require("./db.js");
+const {v4:uuid}=require('uuid');
 
 function saveProduct(product) {
     return new Promise((resolve, reject) => {
@@ -83,6 +84,102 @@ const updateCart = (quant, dCart) => {
     })
 }
 
+function saveaddress(userId, body,address_id) {
+    return new Promise((resolve, reject) => {
+      const adressQuery = `INSERT INTO address values (?,?,?,?,?,?,?,?)`;
+      sql.query(
+        adressQuery,
+        [
+          address_id,
+          userId,
+          body.line1,
+          body.line2,
+          body.city,
+          body.state,
+          body.pincode,
+          body.phone,
+        ],
+        (err, results) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(results);
+        }
+      );
+      //select price from products where product_id=?
+    });
+  }
+  function getAllOrders(userId) {
+    return new Promise((resolve, reject) => {
+      const cartdata = `select * from carts where u_id=?`;
+      sql.query(cartdata, [userId], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  }
+  function saveorder(userId,cartProduct, address_id, payment_mode) {
+    return new Promise((resolve, reject) => {
+        const order_id=uuid();
+      const cartdata = `select price,seller_id from products where p_id="${cartProduct.p_id}"`;
+      sql.query(cartdata, [userId], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          const query = `INSERT INTO orders (o_id,u_id,p_id,s_id,a_id, quantity, total_amount,payment_mode)
+              values (?,?,?,?,?,?,?,?)`;
+          sql.query(
+            query,
+            [
+                order_id,
+              userId,
+              cartProduct.p_id,
+              results[0].seller_id,
+              address_id,
+              cartProduct.quantity,
+              results[0].price * cartProduct.quantity,
+              payment_mode,
+            ],
+            (err, results) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(true);
+              }
+            }
+          );
+        }
+      });
+    });
+  }
+  const emptyCartOfUser = async (userId) => {
+    return new Promise((resolve, reject) => {
+      const query = `DELETE FROM carts WHERE u_id=?`;
+      sql.query(query, [userId], (err, results) => {
+       err?reject(err):resolve(results)
+      });
+    });
+  };
+
+  function getMyOrdersQuery(userId){
+    return new Promise((resolve,reject)=>{
+      const query=` SELECT * from orders o inner join products p
+      on p.p_id=o.p_id
+      WHERE o.u_id=?;
+      `;
+      sql.query(query,[userId],(error,results)=>{
+        if(error){
+          reject(error);
+        }else{
+          resolve(results);
+        }
+      });
+    });
+  }
+
 module.exports = {
     fetchProducts,
     createCart,
@@ -91,5 +188,10 @@ module.exports = {
     saveProduct,
     cartExist,
     fetchcart,
-    updateCart
+    updateCart,
+    saveaddress,
+    getAllOrders,
+    saveorder,
+    emptyCartOfUser,
+    getMyOrdersQuery
 }

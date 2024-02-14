@@ -61,15 +61,15 @@
 
 <div class="container">
   <h1>Address Information</h1>
-  <form action="submit_order.php" method="post">
+  <form id="form">
     <label for="phone">Phone Number:</label>
     <input type="text" id="phone" name="phone" required>
 
-    <label for="address1">Address Line 1:</label>
-    <input type="text" id="address1" name="address1" required>
+    <label for="line1">Address Line 1:</label>
+    <input type="text" id="line1" name="line1" required>
 
-    <label for="address2">Address Line 2:</label>
-    <input type="text" id="address2" name="address2">
+    <label for="line2">Address Line 2:</label>
+    <input type="text" id="line2" name="line2">
 
     <label for="city">City:</label>
     <input type="text" id="city" name="city" required>
@@ -87,10 +87,59 @@
       <option value="paypal">PayPal</option>
       <option value="cod">Cash on Delivery</option>
     </select>
-
+    <p id="message"></p>
     <input type="submit" value="Place Order">
   </form>
 </div>
 
+<script>
+
+const form = document.getElementById("form");
+        const line1 = document.getElementById("line1");
+        const line2 = document.getElementById("line2");
+        const city = document.getElementById("city");
+        const state = document.getElementById("state");
+        const pincode = document.getElementById("pincode");
+        const phone = document.getElementById("phone");
+        const paymentMode=document.getElementById('payment');;
+   form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const formdata = {
+            line1: line1.value,
+            line2: line2.value,
+            city: city.value,
+            state: state.value,
+            pincode: pincode.value,
+            phone: phone.value,
+            payment_mode:paymentMode.value
+        }
+         
+            fetch("/cart/place-order", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/JSON",
+                    authorization:localStorage.getItem("token")
+                    
+                },
+                body: JSON.stringify(formdata)
+            }).then((data) => {
+                if (data.status==200){
+                  alert("orders placed successfully");
+                }
+                displayMessage();
+            }).catch((err) => {
+                console.log(err);
+
+            });
+
+        })
+
+        function displayMessage(){
+          const message=document.getElementById('message');
+          message.innerHTML=`
+          <a href="/">Go to home page</a>
+          `;
+        }
+</script>
 </body>
 </html>

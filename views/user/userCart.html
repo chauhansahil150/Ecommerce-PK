@@ -18,10 +18,11 @@
             display: flex;
             flex-direction: column;
         }
+
         .detailcontainer {
             width: 100%;
             height: 75vh;
-             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 20px;
             /* background-color: black; */
             overflow: scroll;
@@ -32,7 +33,7 @@
             width: 100%;
             height: 10%;
             /* background-color:rgb(251, 247, 247); */
-            box-shadow:0px 0px 3px grey;
+            box-shadow: 0px 0px 3px grey;
             /* background-image:linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74)); */
             border-radius: 10px;
             display: flex;
@@ -258,7 +259,7 @@
             align-items: center;
             justify-content: center;
         }
-    
+
         #sum_orderbtn {
             font-size: x-large;
             border: none;
@@ -284,9 +285,9 @@
         <div class="sum_container">
             <div class="datasumcontainer">
                 <div id="totalprice">
-                    <p id="t_price">37647</p>
+                    <p id="t_price">0</p>
                 </div>
-                <div id="order_btn"><button id="sum_orderbtn">Place order</button>
+                <div id="order_btn"><button id="buyNow">Buy Now</button>
                 </div>
             </div>
         </div>
@@ -399,13 +400,30 @@
             } else {
                 alert("Something went wrong")
             }
+            const price = document.getElementById(`price${id}`).innerText;
+            const t_price = document.getElementById('t_price')
+            console.log(price)
+            console.log(t_price)
+            console.log(Number(t_price.innerText) - Number(price))
+            t_price.innerText = Number(t_price.innerText) - Number(price)
             document.getElementById("cont" + id).remove()
         } catch (error) {
             alert(error)
             console.log(error);
         }
     }
-
+    const BuyNowBtn = document.getElementById('buyNow');
+    BuyNowBtn.addEventListener('click', loadPlaceOrderPage);
+    async function loadPlaceOrderPage(event) {
+        fetch('/cart/place-order')
+        .then(res=>{
+            if(res.ok){
+                console.log(res.url);
+            window.location.href = res.url;
+            }
+        })
+       
+    }
 </script>
 
 </html>
