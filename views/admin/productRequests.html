@@ -1,10 +1,163 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .header{
+            height: 80px;
+            background-color: violet;
+            color: white;
+            width: 100%;
+        }
+        .header .upper{
+            height: 60%;
+            display: flex;
+            justify-content:center ;
+            align-items: center;
+            border-bottom: 1px solid whitesmoke;
+        }
+        .header .lower{
+            height: 40%;
+            display: flex;
+            justify-content: space-between;
+            align-items:center;
+            padding-inline: 30px;
+        }
+        .header .lower .lefth, .header .lower .righth{
+            display:flex;
+            gap: 15px;
+        }
+        a{
+            text-decoration: none;
+            color: white;
+            font-weight: bolder
+        }
+            table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top:5%;
+           }
+        
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        .td{
+            padding:10px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            
+          }
+    </style>
 </head>
 <body>
-    product request
+    <div class="header">
+        <div class="upper">
+            <h2>Admin Panel</h2>
+        </div>
+        <div class="lower">
+            <div class="lefth">
+                <a href="/admin/sellerRequestPage">Seller Requests</a>
+                <a href="/admin/productRequestPage">Products Requests</a>
+                <!-- <a href="">Transporters</a>
+                <a href="">Products</a> -->
+            </div>
+            <div class="righth">
+                <a onclick="logout()" href="">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <table id="table">
+            <tr>
+              <th>PRODUCT NAME</th>
+              <th>PRODUCT DESCRIPTION </th>
+              <th>PRICE </th>
+              <th>STOCK </th>
+            </tr>
+            </table>
+          </body>
+          </html>
+    </div>
+
+    <script>
+      function productDataCard(product){
+        console.log('product',product);
+        const table=document.getElementById('table');
+        const tableData=document.createElement('tr');
+
+        tableData.id=`tabledata-${product.p_id}`;
+        tableData.innerHTML=`
+              <td>${product.name}</td>
+              <td>${product.des}</td>
+              <td>${product.price}</td>
+              <td>${product.stock}</td>
+              <td><button onclick="rejectproduct('${product.p_id}');">Reject</button></td>
+              <td><button onclick="approveproduct('${product.p_id}');">Approve</button></td>
+            `
+            table.appendChild(tableData);
+      }
+    let arr=[];
+      fetch("/admin/allProducts")
+    .then((result) => {
+        return result.json();
+    }).then((data) => {
+        console.log(data);
+        array=data;
+        console.log(data);
+        data.forEach(p => {
+        productDataCard(p);
+        });
+
+    }).catch(err=>{
+        console.log(err)
+    });
+
+function approveproduct(id){
+    fetch(`/admin/productApprove?p_id=${id}`,{
+        method:'put',
+        headers:{
+            authorization:localStorage.getItem('token'),
+        },
+    })
+    .then(res=>{
+        if(res.status==200){
+            alert('product approved successfully');
+            document.getElementById(`tabledata-${id}`).remove();
+        }
+    })
+    .catch(error=>{
+        console.log(error);
+    })}
+
+function rejectproduct(id){
+    fetch(`/admin/productReject?p_id=${id}`,{
+        method:'delete',
+        headers:{
+            authorization:localStorage.getItem('token'),
+        },
+    })
+    .then(res=>{
+        if(res.status==200){
+            alert('product rejected successfully');
+            document.getElementById(`tabledata-${id}`).remove();
+        }
+    })
+    .catch(error=>{
+        console.log(error);
+    })
+}
+
+    </script>
 </body>
 </html>

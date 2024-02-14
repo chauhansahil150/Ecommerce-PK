@@ -67,11 +67,8 @@
         </div>
         <div class="lower">
             <div class="lefth">
-                <a href="">Home</a>
-                <a href="">Seller Requests</a>
-                <a href="">Products Requests</a>
-                <a href="">Transporters</a>
-                <a href="">Products</a>
+                <a href="/admin/sellerRequestPage">Seller Requests</a>
+                <a href="/admin/productRequestPage">Products Requests</a>
             </div>
             <div class="righth">
                 <a href="">Logout</a>
@@ -102,10 +99,11 @@
 
     <script>
       function sellerDataCard(seller){
+        console.log('seller',seller);
         const table=document.getElementById('table');
         const tableData=document.createElement('tr');
 
-        tableData.id=`tabledata-${seller.id}`;
+        tableData.id=`tabledata-${seller.u_id}`;
         tableData.innerHTML=`
               <td>${seller.name}</td>
               <td>${seller.phone}</td>
@@ -116,10 +114,10 @@
               <td>${seller.adharimg}</td>
               <td>${seller.pancardnumber}</td>
               <td>${seller.pancardimg}</td>
-            <td>${seller.line1}</td>
+             <td>${seller.line1}</td>
               <td>${seller.line2}</td>
-              <td><button>Reject</button></td>
-              <td><button>Approve</button></td>
+              <td><button onclick="rejectSeller('${seller.u_id}');">Reject</button></td>
+              <td><button onclick="approveSeller('${seller.u_id}');">Approve</button></td>
             `
             table.appendChild(tableData);
       }
@@ -135,11 +133,44 @@
         sellerDataCard(p);
         });
 
-    }).catch(err=>[
+    }).catch(err=>{
         console.log(err)
-    ]);
+    });
 
+function approveSeller(id){
+    fetch(`/admin/sellerApprove?u_id=${id}`,{
+        method:'put',
+        headers:{
+            authorization:localStorage.getItem('token'),
+        },
+    })
+    .then(res=>{
+        if(res.status==200){
+            alert('seller approved successfully');
+            document.getElementById(`tabledata-${id}`).remove();
+        }
+    })
+    .catch(error=>{
+        console.log(error);
+    })}
 
+function rejectSeller(id){
+    fetch(`/admin/sellerReject?u_id=${id}`,{
+        method:'delete',
+        headers:{
+            authorization:localStorage.getItem('token'),
+        },
+    })
+    .then(res=>{
+        if(res.status==200){
+            alert('seller rejected successfully');
+            document.getElementById(`tabledata-${id}`).remove();
+        }
+    })
+    .catch(error=>{
+        console.log(error);
+    })
+}
 
     </script>
 </body>
