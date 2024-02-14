@@ -59,7 +59,7 @@ function crossbtn(id) {
 }
 function addtoCart(id) {
     fetch(`/cart?p_id=${id}`,{
-        method:"POST",
+        method:"POST",result
         headers:{
             authorization:localStorage.getItem("token")
         }
