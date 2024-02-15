@@ -10,11 +10,12 @@ function savesellerdetailuser(data) {
 }
 function savesellerdetailseller(data) {
   return new Promise((resolve, reject) => {
-    const qry2 = `insert into sellerdetails values("${data.id}","${data.adharnumber}","${data.adharimg}","${data.pannumber}","${data.panimage}")`;
+    const qry2 = `insert into sellerdetails values("${data.id}","${data.adharnumber}","${data.adharimg}","${data.pannumber}","${data.panimage}",0)`;
     sql.query(qry2, (err, data) => {
       err ? reject(err) : resolve(data);
     });
   });
+  
 }
 function savesellerdetailAddress(data){
   return new Promise((resolve,reject)=>{

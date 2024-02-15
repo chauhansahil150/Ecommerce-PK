@@ -19,9 +19,99 @@
             flex-direction: column;
         }
 
+        .all {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .header {
+            width: 100%;
+            height: 10vh;
+            /* box-shadow: 0px 0px 15px grey; */
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+
+            /* background-color: rgb(253, 251, 248); */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            border-radius: 10px;
+        }
+
+        .upperheader {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            flex-direction: row;
+            font-size: xX-large;
+            justify-content: center;
+            align-items: center;
+            font-weight: bolder;
+            color: grey
+        }
+
+        .lowerheader {
+            width: 100%;
+            height: 60%;
+            background-color: aliceblue;
+            display: flex;
+            background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));
+        }
+
+        .action {
+            width: 60%;
+            height: 100%;
+            /* background-color: beige; */
+            display: flex;
+            align-items: center;
+
+        }
+
+        #home,
+        #order {
+            margin: 8px 40px;
+            font-weight: bolder;
+            font-size: 14px;
+            text-decoration: none;
+            color: white;
+
+
+        }
+
+        .log_con {
+            /* background-color: brown; */
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            margin-left: 140px;
+            height: 100%;
+        }
+
+
+        #profile,
+        #logout {
+            font-size: 14px;
+            font-weight: bolder;
+            margin: 0px 40px;
+            text-decoration: none;
+            color: white;
+        }
+
+        #home:hover,
+        #order:hover,
+        #profile:hover,
+        #logout:hover {
+            text-decoration: underline;
+            color: darkblue;
+        }
+
         .detailcontainer {
             width: 100%;
-            height: 75vh;
+            height: 65vh;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 20px;
             /* background-color: black; */
@@ -30,7 +120,7 @@
 
 
         .label {
-            width: 100%;
+            width: 40%;
             height: 10%;
             /* background-color:rgb(251, 247, 247); */
             box-shadow: 0px 0px 3px grey;
@@ -38,9 +128,10 @@
             border-radius: 10px;
             display: flex;
             background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));
-            margin-top: 50px;
+            margin: 20px 32%;
             align-items: center;
             justify-content: center;
+
         }
 
         h1 {
@@ -187,10 +278,12 @@
             text-decoration: none;
             cursor: pointer;
             box-shadow: 0px 0px px grey;
-            /* Border color */
-            border-radius: 3px;
-            color: #fff;
+            border: none;
+            border-radius: 5px;
+            color: white;
             /* Text color */
+            padding: 15px;
+            width: 100%;
             background-image: linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74));
             /* Background color */
 
@@ -222,7 +315,7 @@
 
         .sum_container {
             width: 100%;
-            height: 25vh;
+            height: 30vh;
             /* background-color: #fff; */
             display: flex;
             justify-content: end;
@@ -258,6 +351,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            /* background-image: linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74)); */
+
         }
 
         #sum_orderbtn {
@@ -272,22 +367,41 @@
 </head>
 
 <body>
+
     <div class="c_body">
-        <div class="detailcontainer">
-            <div class="label">
-                <h1>YOUR SHOPPING CART</h1>
-            </div>
-            <div id="cart_container">
+        <div class="all">
+            <div class="header">
+                <div class="upperheader"> WELCOME TO ABC </div>
 
-            </div>
-
-        </div>
-        <div class="sum_container">
-            <div class="datasumcontainer">
-                <div id="totalprice">
-                    <p id="t_price">0</p>
+                <div class="lowerheader">
+                    <div class="action">
+                        <a href="/" id="home">HOME</a>
+                        <a href="/orderPage" id="order">ORDERS</a>
+                        <!-- <a href="/carts" id="cart">CART</a> -->
+                    </div>
+    
+                    <div class="log_con">
+                        <div id="profile">USERNAME</div>
+                        <a onclick="logout()" id="logout">LOGOUT</a>
+                        </a>
+                    </div>
                 </div>
-                <div id="order_btn"><button id="buyNow">Buy Now</button>
+            </div>
+            <div class="detailcontainer">
+                <div class="label">
+                    <h1>YOUR SHOPPING CART</h1>
+                </div>
+                <div id="cart_container">
+                </div>
+
+            </div>
+            <div class="sum_container">
+                <div class="datasumcontainer">
+                    <div id="totalprice">
+                        <p id="t_price">0</p>
+                    </div>
+                    <div id="order_btn"><button id="buyNow">Buy Now</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -416,13 +530,13 @@
     BuyNowBtn.addEventListener('click', loadPlaceOrderPage);
     async function loadPlaceOrderPage(event) {
         fetch('/cart/place-order')
-        .then(res=>{
-            if(res.ok){
-                console.log(res.url);
-            window.location.href = res.url;
-            }
-        })
-       
+            .then(res => {
+                if (res.ok) {
+                    console.log(res.url);
+                    window.location.href = res.url;
+                }
+            })
+
     }
 </script>
 

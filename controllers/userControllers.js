@@ -156,7 +156,7 @@ const usersignup = async (req, res) => {
   } catch (error) {
     console.log(error.errno);
     if (error.errno == 1062) {
-      res.status(403);
+      res.status(403).end();
     } else {
       res.status(500).send("Internal error");
     }

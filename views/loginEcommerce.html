@@ -6,19 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
     <style>
-        body {
+        .all {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         }
-
-        h1 {
-            background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));
-            border-radius: 5px;
-            width: auto;
-            color: white;
+        .header {
+            width: 100%;
+            height: 10vh;
+            /* box-shadow: 0px 0px 15px grey; */
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            /* background-color: rgb(253, 251, 248); */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            border-radius :10px;
         }
+        .upperheader {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            flex-direction: row;
+            font-size: xX-large;
+            justify-content: center;
+            align-items: center;
+            font-weight: bolder;
+            color:grey;
+        }
+
+
+        h1{ 
+            background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));
+            border:none;
+            border-radius: 5px;
+            color:white;
+            width:30%;
+            text-align: center;
+        }    
 
         .logincontainer {
             width: 50%;
@@ -26,10 +54,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0px 0px 3px grey;
-
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-
+             box-shadow: 0 2px 15px rgba(0,0,0,0.1);
             margin-top: 80px;
             padding: 10px 17px;
         }
@@ -47,26 +72,28 @@
         input {
             border: none;
             box-shadow: 1px 1px 2px grey;
-            margin-right: 10px;
+            margin-left: 30px;
         }
+        .btn{
+            width:10%;
 
-        .btn {
-            width: 10%;
         }
-
-        #loginbutton {
-            background-image: linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74));
-            color: white;
-            border: none;
-            padding: 5px;
-            font-weight: bolder;
-            border-radius: 12px;
-            width: auto;
+        #login {
+           background-image: linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74));
+           color:white;
+           border:none;
+           padding:5px;
+           font-weight: bolder;
+           border-radius: 12px; 
+           width:auto;
         }
     </style>
 </head>
 
 <body>
+    <div class="all">
+    <div class="header">
+        <div class="upperheader"> WELCOME TO ABC </div></div>
     <div class="logincontainer">
         <H1>LOGIN</H1>
         <div class="username">
@@ -74,12 +101,13 @@
         <div class="password">
             Password: <input type="text" name="" id="password"> </div>
         <div class="btn">
-            <button id="login">LOGIN</button>
+            <button id="login" >LOGIN</button>
         </div>
         <div class="signup">
-            <a href="">Create Account Signup</a>
+            <a href="/signup">Create Account Signup</a>
         </div>
     </div>
+</div>
 </body>
 
 
@@ -97,37 +125,37 @@
             return
 
         }
-        fetch("/login", {
-            method: "POST",
-            headers: {
-                "content-type": "application/JSON"
+        fetch("/login",{
+            method:"POST",
+            headers :{
+                "content-type":"application/JSON"
             },
             body: JSON.stringify({
-                email: email.value,
-                password: password.value
+                email:email.value,
+                password:password.value
             })
 
         }).then((result) => {
-            if (result.status == 404) {
+            if(result.status==404){
                 alert("user not found")
                 return
             }
-            if (result.status == 401) {
+            if(result.status==401){
                 alert("password not match")
                 return
             }
-            if (result.ok) {//status==200
+            if(result.ok){//status==200
                 return result.json()//token
-            }
+            }    
 
-        }).then(t => {
-            localStorage.setItem("token", t.token)//token ko store krwana //browser 
-            location.href = t.url; // redirect 
+        }).then(t=> {
+                localStorage.setItem("token",t.token)//token ko store krwana //browser 
+                location.href=t.url; // redirect 
         })
-            .catch((err) => {
-                console.log(err);
+        .catch((err) => {
+            console.log(err);
 
-            });
+        });
     })
 </script>
 

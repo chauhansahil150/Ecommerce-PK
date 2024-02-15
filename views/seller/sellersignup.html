@@ -50,11 +50,12 @@
             text-align: left;
         }
 
-        .form>input {
+        .form>input{
             padding: 5px 8px;
             border:none;
             box-shadow: 0px 0px 5px grey;
         }
+        
         label{
             font-size: 14px;
             color: dark grey;
@@ -88,6 +89,16 @@
             border-radius: 8px
             
         }
+          #panimage{
+            border:none;
+        }
+
+        #message{
+            width:40%;
+            height:20%;
+            background-color: azure;
+            box-shadow:0px 0x 12px grey;
+        }
     </style>
 
 
@@ -100,33 +111,39 @@
             <div class="form">
                 <label for="">Name </label>
                 <input type="text" id="name" name="name">
+                <label for="">CITY</label>
+                <input type="text" id="city">
+
+       
+
                 <label for="">EMAIL</label>
                 <input type="text" id="email" name="email">
+                
+                <label for="">STATE</label>
+                <input type="text" id="state" name="state">
+               
 
                 <label for="">PASSWORD</label>
                 <input type="password" id="password" name="password">
                 <label for="">ADHAR CARD</label>
                 <input type="text" id="adharnumber" name="adharnumber">
 
-                <label for="">ADHAR IMAGE</label>
-                <input type="text" id="adharimg" name="adharimg">
+ 
+                <label for="">ADRESSLINE1</label>
+                <input type="text" id="adressline1" name="adressline1">
                 <label for="">PAN CARD</label>
                 <input type="text" id="pannumber" name="pannumber">
 
-                <label for="">PAN IMAGE</label>
-                <input type="text" id="panimage" name="panimage">
-                <label for="">ADRESSLINE1</label>
-                <input type="text" id="adressline1" name="adressline1">
-
-                <label for="">ADRESS LINE2</label>
+                
+                <label for="">ADRESSLINE2</label>
                 <input type="text" id="adressline2" name="ADRESSLINE2">
-                <label for="">CITY</label>
-                <input type="text" id="city">
-
+                <label for="">PAN IMAGE</label>
+                <input type="file" id="panimage" name="panimage">
+           
                 <label for="">COUNTRY</label>
                 <input type="text" id="country" name="country">
-                <label for="">STATE</label>
-                <input type="text" id="state" name="state">
+                <label for="">ADHAR IMAGE</label>
+                <input type="file" id="adharimg" name="adharimg">
 
                 <label for="">PINCODE</label>
                 <input type="text" id="pincode" name="pincode">
@@ -135,11 +152,13 @@
             </div>
             <div class="action">
                 <button type="submit"> signup</button>
+                <p id="message"></p>
                 <a href=""> LOGIN HERE</a>
             </div>
         </form>
     </div>
     <script>
+        const message=document.getElementById("message");
         const form = document.getElementById("form");
         const name = document.getElementById("name");
         const email = document.getElementById("email");
@@ -184,8 +203,12 @@
                 },
                 body: JSON.stringify(formdata)
             }).then((data) => {
-                if (data.ok)
-                    console.log("recieve successfully okay");
+                if(data.status== 403){
+                    alert("Email already exist");
+                }
+                if(data.ok){
+                    message.innerText="SIGNUP SUCESSFULLY";
+                }
 
             }).catch((err) => {
                 console.log(err);
