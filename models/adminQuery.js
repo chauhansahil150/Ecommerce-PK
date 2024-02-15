@@ -19,8 +19,7 @@ function approveSellerRequestQuery(id){
         const qry=`UPDATE users u,sellerdetails sd
         set u.role='seller',sd.isApproved=1
         WHERE sd.u_id="${id}"
-        and u.u_id="${id}"
-        `
+        and u.u_id="${id}"`
         sql.query(qry,(err,data)=>{
             err?reject(err):resolve(data);
         })

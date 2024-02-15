@@ -77,6 +77,9 @@ const signupSeller = async (req, res) => {
 
     res.status(200).end();
   } catch (error) {
+    if(error.errno == 1062){
+      res.status(403).end();
+    }
     console.log(error);
     res.status(500).end();
   }
