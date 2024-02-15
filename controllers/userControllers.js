@@ -11,7 +11,8 @@ const {
   getAllOrders,
   saveorder,
   emptyCartOfUser,
-  getMyOrdersQuery
+  getMyOrdersQuery,
+  cancelOrderQuery
 } = require("../models/Query");
 const { v4: uuid } = require("uuid"); //
 const jwt = require("jsonwebtoken");
@@ -156,7 +157,7 @@ const usersignup = async (req, res) => {
   } catch (error) {
     console.log(error.errno);
     if (error.errno == 1062) {
-      res.status(403);
+      res.status(403).end();
     } else {
       res.status(500).send("Internal error");
     }
@@ -230,6 +231,21 @@ async function getMyOrders(req, res){
         res.status(500).end();
     }
 }
+
+const cancelOrder=async (req, res)=>{
+  try {
+      const o_id=req.query.o_id;
+      const response=await cancelOrderQuery(o_id,req.body.reason,req.body.cancel_date);
+      console.log(response)
+      if(response.affectedRows>0){
+        res.status(200).end();
+      }
+  
+  } catch (error) {
+      console.log(error);
+       res.status(500).send({error:"Internal Server Error"});
+  }
+  }
 module.exports = {
   homepage,
   showproducts,
@@ -245,5 +261,6 @@ module.exports = {
   getPlaceOrderPage,
   placeOrder,
   getMyOrdersPage,
-  getMyOrders
+  getMyOrders,
+  cancelOrder
 };

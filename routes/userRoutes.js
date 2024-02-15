@@ -15,7 +15,8 @@ const {
   getPlaceOrderPage,
   placeOrder,
   getMyOrdersPage,
-  getMyOrders
+  getMyOrders,
+  cancelOrder
 } = require("../controllers/userControllers");
 
 function checkauth(req, res, next) {}
@@ -41,5 +42,7 @@ userRoutes.get("/cart/place-order", getPlaceOrderPage);
 userRoutes.post("/cart/place-order", placeOrder);
 userRoutes.get("/orderPage",getMyOrdersPage);
 userRoutes.get("/orders",getMyOrders);
+userRoutes.put('/order/cancel', cancelOrder)
+
 
 module.exports = userRoutes;
