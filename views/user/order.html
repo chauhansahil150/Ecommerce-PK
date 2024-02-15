@@ -160,6 +160,37 @@
       background-color: #32cd32;
       color: white;
     }
+
+    .action_btn {
+        align-self: flex-end;
+        background-color: green;
+        color: white;
+        font-size: 17px;
+        font-weight: bold;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        margin-right: 30px;
+      }
+
+      .form {
+        position: fixed;
+        top: 15px;
+        height: 300px;
+        width: 500px;
+        box-shadow: 1px 1px 4px black;
+        justify-self: flex-start;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+      }
+
+      .order-item{
+        margin-top: 10px;
+        border: 2px solid black;
+      }
   </style>
 </head>
 
@@ -183,33 +214,119 @@
       </div>
     </div>
 
-    <div class="container" id="container">
-      <h1>Order Details</h1>
+<div class="container" id="container">
+  <h1>Order Details</h1>
+ 
+  </div>
+ 
+</div>
 
+<div id="reason" class="container" style="visibility: hidden;">
+  <div class="form" id="form">
+    <label for="" style="margin-bottom: 10px">Tell us why are you cancelling:</label>
+    <textarea name="reason" id="reasontext" cols="30" rows="10"></textarea>
+    <p style="color: red" id="reason_err"></p>
+    <div class="" style="display: flex;">
+      <button id="cancelBtn"  class="action_btn" style="margin: 20px; align-self: center">Cancel Order</button>
+    <button id="closebtn" class="action_btn" style="margin: 20px; align-self: center">close</button>
     </div>
   </div>
-  </div>
+</div>
 
-  <script>
-    function orderItemCard(p) {
-      const orderItems = document.getElementById('container');
-      const item = document.createElement('div');
-      item.id = `order-${p.o_id}`;
-      item.class = 'order-item';
-      item.innerHTML = `
-    <img src="${p.image}" alt="Product Image" width="150px" height="150px">
+<script>
+        const reasonWindow = document.getElementById("reason");
+        const closebtn = document.getElementById("closebtn");
+        const cancelBtn=document.getElementById('cancelBtn');
+        
+        closebtn.addEventListener('click',()=>{
+          cancelBtn.id='cancelBtn';
+          reasonWindow.style.visibility='hidden';
+        })
+
+  function orderItemCard(p){
+    const orderItems=document.getElementById('container');
+    const item=document.createElement('div');
+    item.id=`order-${p.o_id}`;
+    item.class='order-item';
+    if(p.status!=null){
+      item.innerHTML=`
+    <div>
+      <img src="${p.image}" alt="Product Image" width="150px" height="150px">
+    </div>
     <div class="order-info">
+      <div  id='status-${p.o_id}'>order status:${(p.status==null)?"pending":p.status}</div>
       <h2>${p.name}</h2>
       <p>Quantity: ${p.quantity}</p>
-      <p>Price: ${p.total_amount}</p>
+      <p>Total Price: ${p.total_amount}</p>
+      <p>Payment Mode ${p.payment_mode}</p>
+    </div>`
+    }
+    else{
+      item.innerHTML=`
+    <div>
+      <img src="${p.image}" alt="Product Image" width="150px" height="150px">
+    </div>
+    <div class="order-info">
+      <div  id='status-${p.o_id}'>order status:${(p.status==null)?"pending":p.status}</div>
+      <h2>${p.name}</h2>
+      <p>Quantity: ${p.quantity}</p>
+      <p>Total Price: ${p.total_amount}</p>
+      <p>Payment Mode ${p.payment_mode}</p>
       <div class="order-buttons">
-        <button class="button cancel">Cancel Order</button>
-        <button class="button tracking">Track Order</button>
-      </div>
+        <button onclick="cancelOrderBtn('${p.o_id}')" class="button cancel">Cancel Order</button>
+      </div
     </div>
     `;
-      orderItems.appendChild(item);
     }
+    
+    orderItems.appendChild(item);
+  }
+
+  function cancelOrderBtn(o_id){
+    cancelBtn.id=`cancelBtn#${o_id}`;
+    reasonWindow.style.visibility='visible';
+  }
+
+  cancelBtn.addEventListener('click',()=>{
+    o_id=cancelBtn.id.split('#')[1];
+    cancelOrder(o_id) 
+  })
+  function cancelOrder(id) {
+        const cancel_date=new Date();
+        const reason=document.getElementById('reasontext');
+          console.log(id);
+          console.log(reason);
+          if(reason.value?.trim()==''){
+            alert("give proper reason");
+            return;
+          }
+          fetch(`/order/cancel?o_id=${id}`, {
+            method: "PUT",
+            headers: {
+              "content-type": "application/json",
+              authorization:localStorage.getItem('token')
+            },
+            body: JSON.stringify({ reason: reason.value,cancel_date }),
+          })
+            .then((result) => {
+              console.log(result);
+              if (result.status==200) {
+                reason.value = "";
+                alert("Order Cancelled successfully !");
+                reasonWindow.style.display = "none";
+              const orderStatus=document.getElementById(`status-${id}`);
+              // const deleteButton=document.getElementById(`cancel-${id}`);
+              // deleteButton.style.display='none';
+            
+              } else {
+                alert("Order Not Found !");
+              }
+            })
+            .catch((err) => {
+              alert("Something went wrong !");
+              console.log(err);
+            });
+      }
 
     fetch('/orders', {
       method: 'get',

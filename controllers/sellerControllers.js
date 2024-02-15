@@ -6,7 +6,8 @@ const {
   getsellerproductquery,
   updateProductQuery,
   deleteProductQuery,
-  savesellerdetailAddress
+  savesellerdetailAddress,
+  getAllCustomerOrdersQuery
 } = require("../models/sellerquery");
 const { fetchProducts } = require("../models/Query");
 const jwt = require("jsonwebtoken");
@@ -163,6 +164,18 @@ const deleteProduct = async (req, res) => {
 };
 
 
+const getAllCustomerOrders= async (req,res)=>{
+  try {
+    var decoded = jwt.verify(req.headers.authorization, "payal");
+    const customerOrders=await getAllCustomerOrdersQuery(decoded.u_id);
+    res.status(200).json(customerOrders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).end();
+  }
+}
+
+
 
 module.exports = {
   signupSeller,
@@ -172,6 +185,7 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getAddProductPage,
-  getOrdersPage
+  getOrdersPage,
+  getAllCustomerOrders
   
 };

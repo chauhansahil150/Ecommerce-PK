@@ -180,6 +180,22 @@ function saveaddress(userId, body,address_id) {
     });
   }
 
+  function cancelOrderQuery(o_id,reason,cancel_date){
+    return new Promise((resolve,reject)=>{
+         let selectProductSQL;
+           selectProductSQL=`
+           UPDATE orders 
+   SET status = 'cancelled',
+       cancel_date = '${cancel_date}',
+       cancel_reason = '${reason}' 
+   WHERE o_id = '${o_id}';
+   `;
+         sql.query(selectProductSQL,(err,data)=>{
+          err?reject(err):resolve(data);
+         });
+       });
+   }
+
 module.exports = {
     fetchProducts,
     createCart,
@@ -193,5 +209,6 @@ module.exports = {
     getAllOrders,
     saveorder,
     emptyCartOfUser,
-    getMyOrdersQuery
+    getMyOrdersQuery,
+    cancelOrderQuery
 }

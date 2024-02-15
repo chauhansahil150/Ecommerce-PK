@@ -54,11 +54,21 @@ function deleteProductQuery(p_id,u_id){
   })
 }
 
+function getAllCustomerOrdersQuery(sellerId){
+  return new Promise((resolve,reject)=>{
+    const query=`SELECT * FROM orders WHERE s_id=? and dispatched_to=? `;
+    sql.query(query,[sellerId,'seller'],(err,data)=>{
+     err?reject(err):resolve(data);
+    });
+  });
+}
+
 module.exports = {
   savesellerdetailuser,
   savesellerdetailseller,
   getsellerproductquery,
   updateProductQuery,
   deleteProductQuery,
-  savesellerdetailAddress
+  savesellerdetailAddress,
+  getAllCustomerOrdersQuery
 };

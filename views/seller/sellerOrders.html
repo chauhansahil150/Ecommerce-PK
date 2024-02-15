@@ -19,7 +19,7 @@
             width: 80%;
             height: 250px;
             display: grid;
-            grid-template-columns: 20% 40% 40%;
+            grid-template-columns: 50% 50%;
             border-radius: 10px;
             box-shadow: 0px 0px 5px grey;
         }
@@ -54,7 +54,6 @@
             /* background-image:linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74)); */
             background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));
            
-            color: white;
             box-shadow: 0px 0px 5px grey;
         }
         .three>select{
@@ -66,8 +65,8 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="order">
+    <div class="container" id="container">
+        <!-- <div class="order">
             <div class="one">
                 <img src="https://blackberrys.com/cdn/shop/products/Textured_Casual_Sneakers_In_Brown_Poly-FNPM0055C1SA22FX-image1.jpg?v=1687869295" alt="">
             </div>
@@ -88,52 +87,79 @@
                 </select>
                 <button>Dispatch</button>
             </div>  
-        </div>
-        <div class="order">
-            <div class="one">
-                <img src="https://blackberrys.com/cdn/shop/products/Textured_Casual_Sneakers_In_Brown_Poly-FNPM0055C1SA22FX-image1.jpg?v=1687869295" alt="">
-            </div>
-            <div class="two">
-                <h2>Nike shoes</h2>
-                <p>descrition yha pe dena hai</p>
-                <p>Quantity : 5</p>
-                <p>Price: 10000</p>
-            </div>
-            <div class="three">
-                <p>Address: aksdlkasldhakjsd</p>
-                <p>Status: Accepted</p>
-                <select name="" id="">
-                    <option value="">Kullu</option>
-                    <option value="">kangra</option>
-                    <option value="">chamba</option>
-                    <option value="">shimla</option>
-                </select>
-                <button>Dispatch</button>
-            </div>  
-        </div>
-        <div class="order">
-            <div class="one">
-                <img src="https://blackberrys.com/cdn/shop/products/Textured_Casual_Sneakers_In_Brown_Poly-FNPM0055C1SA22FX-image1.jpg?v=1687869295" alt="">
-            </div>
-            <div class="two">
-                <h2>Nike shoes</h2>
-                <p>descrition yha pe dena hai</p>
-                <p>Quantity : 5</p>
-                <p>Price: 10000</p>
-            </div>
-            <div class="three">
-                <p>Address: aksdlkasldhakjsd</p>
-                <p>Status: Accepted</p>
-                <select name="" id="">
-                    <option value="">Kullu</option>
-                    <option value="">kangra</option>
-                    <option value="">chamba</option>
-                    <option value="">shimla</option>
-                </select>
-                <button>Dispatch</button>
-            </div>  
-        </div>
+        </div> -->
       
     </div>
+
+
+    <script>
+
+        function orderCard(o){
+            const container=document.getElementById('container');
+            const orderCard=document.createElement('div');
+            orderCard.className='order';
+            orderCard.id=`order-${o?.o_id}`;
+            orderCard.innerHTML=`
+            <div class="two">
+                <h2>Order Id:${o.o_id}</h2>
+                <h2>Product Id:${o.p_id}</h2>
+                <p>Quantity : ${o.quantity}</p>
+                <p>Price: ${o.total_amount}</p>
+            </div>
+            <div class="three">
+                <p>Status: Accepted</p>
+                <select name="" id="">
+                    <option value="">Kullu</option>
+                    <option value="">kangra</option>
+                    <option value="">chamba</option>
+                    <option value="">shimla</option>
+                </select>
+                <button>Dispatch</button>
+            </div>  
+            `;
+
+            container.appendChild(orderCard);
+
+        }
+
+
+       function fetchData(){
+            fetch(`/seller/customerOrders`,{
+            method:'get',
+            headers:{
+            authorization:localStorage.getItem("token")
+        }
+        }).then(res=>{
+            if(res.status==200){
+                return res.json();
+            }
+        })
+        .then(data=>{
+            console.log(data);
+          data.forEach(o => {
+            orderCard(o);
+          });
+        })
+        }
+        fetchData();
+
+        async function handleDispatch(id){
+    // console.log(typeof(id));
+    console.log(id);
+       const dispatchTo=document.getElementById(`dispatchto_${id}`).value;
+    console.log(dispatchTo);
+    const response = await dispatchOrder(id,dispatchTo);
+    if(response);{
+      document.getElementById(id).remove();
+  }
+}
+
+        async function dispatchOrder(id,dispatchTo){
+    await fetch(`/seller/order/dispatch/${id}-${dispatchTo}`,{
+        method:'put',
+    });
+}
+        
+    </script>
 </body>
 </html> 
