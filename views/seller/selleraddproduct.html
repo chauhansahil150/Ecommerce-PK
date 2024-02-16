@@ -20,8 +20,8 @@
             height: 14vh;
             box-shadow: 0px 0px 12px grey;
             /* background-color: rgb(253, 251, 248); */
-            color:grey;
-            font-weight:bolder;
+            color: grey;
+            font-weight: bolder;
             display: flex;
             flex-direction: column;
             position: sticky;
@@ -44,7 +44,7 @@
             height: 40%;
             /* background-color: aliceblue; */
             background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));
-            
+
             display: flex;
         }
 
@@ -98,17 +98,17 @@
             border: none;
         }
 
-        .addproductscontain {
+        .form {
             margin-top: 80px;
             width: 50%;
             height: 70vh;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             border-radius: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px 17px;
-           /* background-color: aqua; */
+            /* background-color: aqua; */
         }
 
         .Pname,
@@ -121,19 +121,21 @@
             justify-content: space-between;
             margin: 20px;
             font-weight: 700;
-            width:90%;
-            height:5%;
-          /* background-color: aliceblue; */
-          }
+            width: 90%;
+            height: 5%;
+            /* background-color: aliceblue; */
+        }
+
         #Pname,
         #Pprice,
         #Pdes,
         #Pquantity,
         #img {
-            width:80%;
+            width: 80%;
         }
+
         .addbtn {
-          
+
             border: none;
             padding: 0.5em;
             /* box-shadow: 0px 0px 3px darkgray; */
@@ -141,8 +143,9 @@
             color: white;
             font-weight: bolder;
         }
-        button{
-            border:none;
+
+        button {
+            border: none;
             border: none;
             color: white;
             /* background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143)); */
@@ -155,11 +158,12 @@
             margin: 4px 2px;
             cursor: pointer;
             border-radius: 8px;
-            font-size:20px;
+            font-size: 20px;
         }
-         h1{
-            color:grey;
-         }
+
+        h1 {
+            color: grey;
+        }
     </style>
 </head>
 
@@ -169,7 +173,7 @@
 
         <div class="lowerheader">
             <div class="action">
-                <a href=" " id="home">HOME</a>
+                <a href="/seller/home" id="home">HOME</a>
                 <a href="" id="order">ORDERS</a>
                 <a href="" id="addproducts">ADD PRODUCTS</a>
             </div>
@@ -182,40 +186,61 @@
     </div>
 
 
-    <div class="addproductscontain">
-        <h1>ADD PRODUCTS </h1>
-        <div class="Pname">
-            <input type="text"  id="Pname" placeholder="Product Name">
-        </div>
-
-        <div class="Pprice">
-            <input type="text" id="Pprice" placeholder="Product Price">
-        </div>
-
-        <div class="Pdes">
-            <input type="text" id="Pdes" placeholder=" Product Description">
-        </div>
+    <form class="form" id="form" enctype="multipart/form-data" >
+        <h1>ADD PRODUCTS</h1>
         
-        <div class="Pquantity">
-            <input type="text" id="Pquantity" placeholder="Product Quantity">
-        </div>
-
-        <div class="img">
-         <input type="file" id="img" placeholder="Browse..">
-        </div>
-
-        <div class="addbtn">
-            <button> Add Products</button></div>
-         </div>
-
-
-
+        <input class="Pname" type="text" name="name" id="Pname" placeholder="Product Name">
         
-      
-    </div>
-
- 
-
+        <input class="Pprice" type="text" name="price" id="Pprice" placeholder="Product Price">
+        
+        <input class="Pdes" type="text" name="des" id="Pdes" placeholder="Product Description">
+        
+        <input class="Pquantity" type="text" name="stock" id="Pquantity" placeholder="Product Quantity">
+        
+        <input class="img" type="file" name="img" id="img" placeholder="Browse..">
+        
+        <div class="btn" id="btn">
+            <button type="submit">Add Products</button>
+        </div>
+    </form>
+    
+    <script>
+        const btn = document.getElementById('btn');
+        const name = document.getElementById('Pname');
+        const des = document.getElementById('Pdes');
+        const stock = document.getElementById('Pquantity');
+        const price = document.getElementById('Pprice');
+        const imgInput = document.getElementById('img');
+        const form=document.getElementById('form');
+        
+        form.addEventListener('submit',handleSubmit);
+        function handleSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            // formData.append('name', name.value);
+            // formData.append('des', des.value);
+            // formData.append('stock', stock.value);
+            // formData.append('price', price.value);
+            // formData.append('img', imgInput.files[0]);
+    
+            fetch(`/seller/newProduct`, {
+                method: "POST",
+                headers: {
+                    authorization: localStorage.getItem("token")
+                },
+                body: formData
+            })
+            .then(res => {
+                if (res.status == 200) {
+                    alert('Product added successfully');
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+    </script>
+    
 </body>
 
 </html>

@@ -7,9 +7,10 @@ const {
   updateProductQuery,
   deleteProductQuery,
   savesellerdetailAddress,
-  getAllCustomerOrdersQuery
+  getAllCustomerOrdersQuery,
+  dispatchOrderQuery,
+  addNewProductQuery
 } = require("../models/sellerquery");
-const { fetchProducts } = require("../models/Query");
 const jwt = require("jsonwebtoken");
 const signupSeller = async (req, res) => {
 
@@ -87,7 +88,7 @@ const signupSeller = async (req, res) => {
 
 const getsignuppage = async (req, res) => {
   try {
-    res.sendfile(path.resolve("views/seller/sellersignup.html"));
+    res.sendFile(path.resolve("views/seller/sellersignup.html"));
   } catch (error) {
     console.log(error);
     res.status(500).end();
@@ -95,7 +96,7 @@ const getsignuppage = async (req, res) => {
 };
 const getsellerhomepage =  (req, res) => {
   try {
-    res.sendfile(path.resolve("views/seller/sellerhomepage.html"));
+    res.sendFile(path.resolve("views/seller/sellerhomepage.html"));
   } catch (err) {
     console.log(err);
     res.status(500).end();
@@ -104,7 +105,7 @@ const getsellerhomepage =  (req, res) => {
 
 const getAddProductPage=(req,res)=>{
   try {
-    res.sendfile(path.resolve("views/seller/selleraddproduct.html"));
+    res.sendFile(path.resolve("views/seller/selleraddproduct.html"));
 
   } catch (error) {
     console.log(error);
@@ -113,7 +114,7 @@ const getAddProductPage=(req,res)=>{
 }
 const getOrdersPage=(req,res)=>{
   try {
-    res.sendfile(path.resolve("views/seller/sellerOrders.html"));
+    res.sendFile(path.resolve("views/seller/sellerOrders.html"));
 
   } catch (error) {
     console.log(error);
@@ -175,7 +176,35 @@ const getAllCustomerOrders= async (req,res)=>{
   }
 }
 
+const dispatchOrder= async (req, res)=>{
+  try {
+      const dispatch_to=req.query.dispatch_to;
+      const o_id=req.query.o_id;
+      const qryRes=await dispatchOrderQuery(o_id,dispatch_to,'dispatched');
+      if(qryRes.affectedRows>0){
+      res.status(200).end();
+      }
+  } catch (error) {
+      console.log(error);
+      res.status(500).end()
+}
+}
 
+const addNewProduct= async (req, res)=>{
+  try {
+      const { name, des, price, stock} = req.body;
+      const imageUrl = "/images/" + req?.file?.filename;
+      const p_id=uuid();
+      var {u_id} = jwt.verify(req.headers.authorization, "payal");
+    console.log(req.body,imageUrl,u_id);
+      // Call the generic createProduct function using async/await
+      const qryRes = await addNewProductQuery({p_id, name, des, price, stock, imageUrl,u_id});
+      res.status(200).end();
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({message: "Something went wrong"});
+  }
+}
 
 module.exports = {
   signupSeller,
@@ -186,6 +215,8 @@ module.exports = {
   deleteProduct,
   getAddProductPage,
   getOrdersPage,
-  getAllCustomerOrders
+  getAllCustomerOrders,
+  dispatchOrder,
+  addNewProduct
   
 };

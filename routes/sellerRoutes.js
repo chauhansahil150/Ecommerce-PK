@@ -9,7 +9,9 @@ const {
   deleteProduct,
   getAddProductPage,
   getOrdersPage,
-  getAllCustomerOrders
+  getAllCustomerOrders,
+  dispatchOrder,
+  addNewProduct
 } = require("../controllers/sellerControllers");
 routes.post("/signup", signupSeller);
 routes.get("/signup", getsignuppage);
@@ -21,7 +23,8 @@ routes.get("/products", getsellerproducts);
 routes.put("/product", updateProduct);
 routes.delete("/product", deleteProduct);
 routes.get('/customerOrders',getAllCustomerOrders);
+routes.put('/order/dispatch',dispatchOrder)
 
-
-
+//products
+routes.post('/newProduct',addNewProduct)
 module.exports = routes;

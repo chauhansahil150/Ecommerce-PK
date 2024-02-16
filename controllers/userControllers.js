@@ -32,16 +32,30 @@ const loginUser = async (req, res) => {
     return;
   }
   if (user[0].password == password) {
-    const token = jwt.sign({ u_id: user[0].u_id, role: user[0].role }, "payal"); //paylaod ,secret key
-    if (user[0].role == "user")
+    let token;
+    if(user[0]?.role=='transporter'){
+      token = jwt.sign({ u_id: user[0].u_id, role: user[0].role, area_alloted:user[0].area_alloted }, "payal"); //paylaod ,secret key
+    }else{
+      token = jwt.sign({ u_id: user[0].u_id, role: user[0].role }, "payal"); //paylaod ,secret key
+    }
+    
       res
         .status(200)
         .json({
           token,
-          url: "/",
-        }); //generate token here and redirst to the home page
-    else if (user[0].role == "seller")
-      res.status(200).json({ token, url: "/seller/home" });
+          url: (()=>{
+            if(user[0].role == "user"){
+              return '/'
+            }else if(user[0].role == "seller"){
+              return '/seller/home'
+            }else if(user[0].role == "admin"){
+              return '/admin/home'
+            }else if(user[0].role == "transporter"){
+              return '/transporter/home'
+            }
+          })(),
+        }); //generate token here and redirect to the home page
+   
   } else {
     //handle if password not mathces
     res.status(401).send("Password not matched");

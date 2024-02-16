@@ -99,75 +99,88 @@
         <table id="table">
             <tr>
                 <th>ORDER ID </h>
-                <th>NAME </th>
                 <th>ADRESSLINE1 </th>
                 <th>ADRESSLINE2 </th>
                 <th>STATE </th>
-                <th>COUNTRY </th>
                 <th>PINCODE </th>
                 <th>PHONENUMBER </th>
                 <th>STATUS</th>
-            </tr>
-
-            <tr>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td><select name="status" id="">
-                    <option value="returned">returned</option>
-                    <option value="delivered">delivered</option>
-                </select></td>
-                <td><button>Submit</button></td>
-            </tr>
-            <tr>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td><select name="status" id="">
-                    <option value="returned">returned</option>
-                    <option value="delivered">delivered</option>
-                </select></td>
-                <td><button>Submit</button></td>
-            </tr>            <tr>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td><select name="status" id="">
-                    <option value="returned">returned</option>
-                    <option value="delivered">delivered</option>
-                </select></td>
-                <td><button>Submit</button></td>
-            </tr>            <tr>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td><select name="status" id="">
-                    <option value="returned">returned</option>
-                    <option value="delivered">delivered</option>
-                </select></td>
-                <td><button>Submit</button></td>
-            </tr>
+            </tr>       
         </table>
+
+
+
+        <script>
+
+            function orderCard(o){
+                const table=document.getElementById('table');
+                const orderCard=document.createElement('tr');
+                orderCard.id=`order_${o.o_id}`
+                orderCard.innerHTML=`
+                <td>${o.o_id}</td>
+                <td> ${o.line1}</td>
+                <td>${o.line2} </td>
+                <td>${o.state} </td>
+                <td>${o.pincode} </td>
+                <td> ${o.phone}</td>
+                <td><select name="status" id="status">
+                    <option value="select">select</option>
+                    <option value="returned">returned</option>
+                    <option value="delivered">delivered</option>
+                </select></td>
+                <td><button onclick="handleSubmit('${o.o_id}')" >Submit</button></td>
+                `;
+                table.appendChild(orderCard);
+            }
+            function fetchData(){
+                fetch(`/transporter/orders`,{
+                    method:'get',
+                    headers:{
+                        authorization:localStorage.getItem('token'),
+                    }
+                })
+                .then(res=>{
+                    if(res.status==200){
+                        return res.json();
+                    }
+                })
+                .then(data=>{
+                    console.log(data);
+                    data.forEach(o=> {
+                        orderCard(o);
+                    });
+                }).catch(error=>{
+                console.log(error)
+            })
+            }
+            fetchData();
+
+            function handleSubmit(o_id) {
+    const status = document.getElementById('status').value;
+    if (status == 'select') {
+        alert('Please select the delivery status.');
+        return;
+    }
+
+    fetch(`/transporter/orderStatus?status=${status}&o_id=${o_id}`, {
+        method: 'PUT',
+        headers: {
+            authorization: localStorage.getItem('token')
+        }
+    })
+    .then(res => {
+        if (res.status == 200) {
+            alert(`Order ${status} successfully.`);
+            document.getElementById(`order_${o_id}`).remove();
+        }
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
+
+
+</script>
 </body>
 
 </html>

@@ -56,11 +56,42 @@ function deleteProductQuery(p_id,u_id){
 
 function getAllCustomerOrdersQuery(sellerId){
   return new Promise((resolve,reject)=>{
-    const query=`SELECT * FROM orders WHERE s_id=? and dispatched_to=? `;
+    const query=`SELECT o.*, p.* , a.*
+    FROM orders o
+    LEFT JOIN products p ON o.p_id = p.p_id 
+    JOIN address a ON o.a_id=a.a_id
+    where o.s_id=? and o.dispatched_to=? `;
     sql.query(query,[sellerId,'seller'],(err,data)=>{
      err?reject(err):resolve(data);
     });
   });
+}
+
+function dispatchOrderQuery(o_id,dispatch_to,status){
+  return new Promise((resolve,reject)=>{
+    if(status=='delivered'){
+           query=`UPDATE orders SET dispatched_to=?,delivery_date=now(),status=? WHERE o_id=?`;
+    }else{
+       query=`UPDATE orders SET dispatched_to=?,status=? WHERE o_id=?`;
+    }
+    sql.query(query,[dispatch_to,status,o_id],(err,data)=>{
+     err?reject(err):resolve(data);
+    })
+  });
+}
+
+function addNewProductQuery({p_id,name, des, price, stock, imageUrl,u_id}){
+   return new Promise((resolve,reject)=>{
+    const qry = `
+    INSERT INTO products (p_id,seller_id,name, des, price,stock,image)
+    VALUES (?,?, ?, ?,?,?,?)
+  `;
+
+  sql.query(qry, [p_id,u_id,name, des,price,stock,imageUrl], (err,data)=>{
+    err?reject(err):resolve(data);
+  });
+   })
+  
 }
 
 module.exports = {
@@ -70,5 +101,7 @@ module.exports = {
   updateProductQuery,
   deleteProductQuery,
   savesellerdetailAddress,
-  getAllCustomerOrdersQuery
+  getAllCustomerOrdersQuery,
+  dispatchOrderQuery,
+  addNewProductQuery
 };

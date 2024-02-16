@@ -2,21 +2,38 @@ const express = require("express");
 const server = express();
 const { connectToDatabase,sql } = require("./models/db.js");
 const {v4:uuid} = require("uuid")
+const multer = require("multer");
+const path=require('path');
+
 
 server.use(express.json())
-server.use(express.urlencoded())
-server.use(express.static("public/"))
+server.use(express.urlencoded({extended:false}))
+server.use(express.static(path.join(__dirname, './public')));
 
 const userRoutes = require("./routes/userRoutes");
 const sellerRoutes = require("./routes/sellerRoutes.js");
 const adminRoutes=require('./routes/adminRoutes.js');
+const transporterRoutes=require('./routes/transporterRoutes.js');
 server.use((req,res,next)=>{
     console.log(req.url + "  " + req.method);
     next();
 })
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, './public/images'))
+    },
+    filename: (req, file, cb) => {
+        const fileName = Date.now() + '-' + file.originalname
+        cb(null, fileName)
+    },
+  });
+  const upload = multer({ storage });
+
 server.use("/",userRoutes)
-server.use("/seller",sellerRoutes)
+server.use("/seller",upload.single("img"),sellerRoutes)
 server.use("/admin",adminRoutes);
+server.use("/transporter",transporterRoutes);
 connectToDatabase()
     .then(res => {
         console.log(res);
