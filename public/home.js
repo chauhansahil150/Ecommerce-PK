@@ -31,10 +31,12 @@ function showDesc(id) {
     popupdesbox(newarray[0]);
 }
 function popupdesbox(p) {
-    const popupbox = document.createElement("popupbox");
-    popupbox.className = "popupbox";
+    const popupbox = document.getElementById("popupbox");
+    console.log(popupbox)
+    popupbox.style.visibility='visible';
+
     const popid = Date.now();
-    popupbox.id = popid;
+    // popupbox.id = popid;
     popupbox.innerHTML = ` <div class="popuplabel">
     <button id="popupbtn" onclick="crossbtn(${popid})"> X</button> </div>
     <div class="popupdescontainer">
@@ -48,14 +50,12 @@ function popupdesbox(p) {
             </div>
         </div>
     </div> `
-    container.appendChild(popupbox);
+    
 }
 function crossbtn(id) {
-    console.log(id);
-    const delbtn = document.getElementById(id);
-    console.log(delbtn);
-    // delbtn.style.visibility="hidden";// hides
-    delbtn.style.display = "none";// remove
+    const popupbox = document.getElementById("popupbox");
+    console.log(popupbox)
+    popupbox.style.visibility='hidden';
 }
 function addtoCart(id) {
     fetch(`/cart?p_id=${id}`,{

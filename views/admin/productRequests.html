@@ -73,7 +73,7 @@
                 <a href="">Products</a> -->
             </div>
             <div class="righth">
-                <a onclick="logout()" href="">Logout</a>
+                <a onclick="logout()">Logout</a>
             </div>
         </div>
     </div>
@@ -108,9 +108,18 @@
             table.appendChild(tableData);
       }
     let arr=[];
-      fetch("/admin/allProducts")
-    .then((result) => {
-        return result.json();
+      fetch("/admin/allProducts",{
+        method:'get',
+        headers:{
+            authorization:localStorage.getItem("token")
+        }
+      })
+    .then((res) => {
+        if(res.status==401){
+            location.href=res.url;
+            return;
+        }
+        return res.json();
     }).then((data) => {
         console.log(data);
         array=data;
@@ -157,7 +166,10 @@ function rejectproduct(id){
         console.log(error);
     })
 }
-
+function logout(){
+    location.href='/login';
+    localStorage.removeItem("token");
+}
     </script>
 </body>
 </html>

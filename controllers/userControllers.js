@@ -49,7 +49,7 @@ const loginUser = async (req, res) => {
             }else if(user[0].role == "seller"){
               return '/seller/home'
             }else if(user[0].role == "admin"){
-              return '/admin/home'
+              return '/admin/sellerRequestPage'
             }else if(user[0].role == "transporter"){
               return '/transporter/home'
             }
@@ -105,7 +105,6 @@ const showcartpage = async (req, res) => {
 
 const getusercarts = async (req, res) => {
   try {
-    console.log(req.headers);
     var decoded = jwt.verify(req.headers.authorization, "payal");
     console.log(decoded);
     const carts = await fetchcart(decoded.u_id);

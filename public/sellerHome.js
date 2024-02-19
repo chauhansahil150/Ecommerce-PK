@@ -30,6 +30,10 @@ function displayAllProducts(){
         }
     })
     .then(result=>{
+        if(result.status==401){
+            location.href=result.url;
+            return [];
+        }
         return result.json();
     })
     .then(products=>{
@@ -107,5 +111,11 @@ function deleteProduct(id){
     .catch(err=>{
         console.log(err);
     })
+
+}
+
+function logout(){
+    location.href='/login';
+    localStorage.removeItem("token");
 
 }

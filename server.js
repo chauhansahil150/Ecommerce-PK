@@ -34,6 +34,9 @@ server.use("/",userRoutes)
 server.use("/seller",upload.single("img"),sellerRoutes)
 server.use("/admin",adminRoutes);
 server.use("/transporter",transporterRoutes);
+server.get('/unauthorized',(req,res)=>{
+    res.status(401).send("Unauthorized");
+})
 connectToDatabase()
     .then(res => {
         console.log(res);

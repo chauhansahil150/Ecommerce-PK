@@ -5,6 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+             .header {
+            width: 100%;
+            height: 14vh;
+            box-shadow: 0px 0px 155px grey;
+            /* background-color: rgb(172, 172, 180); */
+            display: flex;
+            color:grey;
+            font-weight: bolder;
+            flex-direction: column;
+            background-color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .upperheader {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            flex-direction: row;
+            font-size: x-large;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .lowerheader {
+            width: 100%;
+            height: 40%;
+            /* background-color:rgb(13, 4, 37); */
+            background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));     
+            display: flex;
+        }
+
+        .action {
+            width: 60%;
+            height: 100%;
+            /* background-color: beige; */
+            display: flex;
+            align-items: center;
+
+        }
+
+        .log_con {
+            /* background-color: brown; */
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            margin-left: 140px;
+            height: 100%;
+        }
+        #home,
+        #addproducts,
+        #order,
+        #reports {
+            margin: 8px 40px;
+            font-size: 14px;
+            text-decoration: none;
+            color: white;
+        }
+
+        #profile,
+        #logout {
+            font-size: 14px;
+            font-weight: bolder;
+            margin: 0px 40px;
+            text-decoration: none;
+            color: white;
+        }
+
+        #home:hover,
+        #cart:hover,
+        #order:hover,
+        #profile:hover,
+        #logout:hover {
+            text-decoration: underline;
+            color: darkblue;
+        }
         .container{
             width: 100%;
             height: 100vh;
@@ -19,7 +97,7 @@
             width: 80%;
             height: 250px;
             display: grid;
-            grid-template-columns: 50% 50%;
+            grid-template-columns:20% 40% 40%;
             border-radius: 10px;
             box-shadow: 0px 0px 5px grey;
         }
@@ -33,8 +111,8 @@
             overflow: hidden;
         }
         .one>img{
-            height: 100%;
-            width: 100%;
+            height: 80%;
+            width: 80%;
             object-fit: cover;
         }
         .two, .three{
@@ -65,6 +143,23 @@
     </style>
 </head>
 <body>
+    <div class="header">
+        <div class="upperheader"> WELCOME TO ABC </div>
+
+        <div class="lowerheader">
+            <div class="action">
+                <a href="/seller/home" id="home">HOME</a>
+                <!-- <a href="/seller/orders" id="order">ORDERS</a> -->
+                <a href="/seller/addProduct" id="addproducts">ADD PRODUCTS</a>
+                <!-- <a href="" id="reports">REPORTS</a> -->
+            </div>
+
+            <div class="log_con">
+                <div id="profile">USERNAME</div>
+                <a onclick="logout()" id="logout">LOGOUT</a>
+            </div>
+        </div>
+    </div>
     <div class="container" id="container">
         <!-- <div class="order">
             <div class="one">
@@ -100,14 +195,22 @@
             orderCard.className='order';
             orderCard.id=`order_${o?.o_id}`;
             orderCard.innerHTML=`
+            <div class="one">
+               <img src="${o.image}"/>
+            </div>
             <div class="two">
-                <h2>Order Id:${o.o_id}</h2>
-                <h2>Product Id:${o.p_id}</h2>
+                <h4>Order Id:${o.o_id}</h4>
+                <h4>Product Id:${o.p_id}</h4>
                 <p>Quantity : ${o.quantity}</p>
                 <p>Price: ${o.total_amount}</p>
             </div>
             <div class="three">
-                <p>Status: Accepted</p>
+                <p>Address</p>
+                <span>Phone:${o.phone}</span>
+                <span>Line1:${o.line1}</span>
+                <span>Line2${o.line2}</span>
+                <span>Pincode:${o.pincode}</span>
+                <span>State:${o.state}</span>
                 <select name="" id="dispatchto_${o.o_id}">
                     <option value="Kullu">Kullu</option>
                     <option value="kangra">kangra</option>
@@ -162,6 +265,12 @@
         console.log(err);
     })
    
+}
+
+function logout(){
+    location.href='/login';
+    localStorage.removeItem("token");
+
 }
 
      

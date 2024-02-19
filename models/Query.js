@@ -13,7 +13,7 @@ function saveProduct(product) {
 
 function fetchProducts() {
     return new Promise((resolve, reject) => {
-        const qry = "select * from products";
+        const qry = "select * from products where isApproved=1";
         sql.query(qry, (err, data) => {
             (err) ? reject(err) : resolve(data)
         })
