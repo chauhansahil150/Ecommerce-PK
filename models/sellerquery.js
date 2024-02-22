@@ -2,7 +2,7 @@ const { sql } = require("./db.js");
 
 function savesellerdetailuser(data) {
   return new Promise((resolve, reject) => {
-    const qry = `insert into users values("${data.id}","${data.name}","${data.email}","${data.password}","${data.phonenumber}","user")`;
+    const qry = `insert into users (u_id,name,email,password,phone,role) values("${data.id}","${data.name}","${data.email}","${data.password}","${data.phonenumber}","user")`;
     sql.query(qry, (e, r) => {
       e ? reject(e) : resolve(r);
     });
@@ -10,7 +10,7 @@ function savesellerdetailuser(data) {
 }
 function savesellerdetailseller(data) {
   return new Promise((resolve, reject) => {
-    const qry2 = `insert into sellerdetails values("${data.id}","${data.adharnumber}","${data.adharimg}","${data.pannumber}","${data.panimage}",0)`;
+    const qry2 = `insert into sellerdetails values("${data.id}","${data.adharnumber}","${data.pannumber}",0)`;
     sql.query(qry2, (err, data) => {
       err ? reject(err) : resolve(data);
     });

@@ -37,6 +37,9 @@ server.use("/transporter",transporterRoutes);
 server.get('/unauthorized',(req,res)=>{
     res.status(401).send("Unauthorized");
 })
+server.get("*",(req,res)=>{
+    res.status(404).send("Not Found");
+})
 connectToDatabase()
     .then(res => {
         console.log(res);

@@ -30,6 +30,7 @@ function showDesc(id) {
     console.log(newarray[0]);
     popupdesbox(newarray[0]);
 }
+
 function popupdesbox(p) {
     const popupbox = document.getElementById("popupbox");
     console.log(popupbox)
@@ -57,7 +58,12 @@ function crossbtn(id) {
     console.log(popupbox)
     popupbox.style.visibility='hidden';
 }
+
 function addtoCart(id) {
+    if(!localStorage.getItem("token")){
+        location.href="/login";
+        return;
+    }
     fetch(`/cart?p_id=${id}`,{
         method:"POST",
         headers:{
@@ -77,12 +83,17 @@ function addtoCart(id) {
     });
 }
 let onlinearray = [];
-
 fetch("/products")
     .then((result) => {
         return result.json();
     }).then((data) => {
-        console.log(data);
+        console.log(data.length);
+        if(data.length<=0){
+            const h2 = document.getElementById("h2")
+
+             h2.innerText ="NO Item HERE";
+             return;
+        }
         array=data;
         // console.log(data);
         data.forEach(p => {

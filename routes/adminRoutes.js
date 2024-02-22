@@ -14,7 +14,7 @@ const jwt=require('jsonwebtoken');
 const isAdmin=(req,res,next)=>{
     if(req.headers.authorization=='null'){
       console.log("if")
-      res.redirect('/unauthorized');
+      res.redirect('/unauthorized'); //
       return;
     };
     const decoded=jwt.verify(req.headers.authorization,'payal');

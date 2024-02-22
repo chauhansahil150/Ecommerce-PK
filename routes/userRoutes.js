@@ -21,14 +21,10 @@ const {
 
 function checkauth(req, res, next) {}
 
-userRoutes.get("/", homepage);
-
-userRoutes.get("/products", showproducts);
-
 userRoutes.route("/login").get(showloginpage).post(loginUser);
-
 userRoutes.route("/signup").get(sendsignuppage).post(usersignup);
-
+userRoutes.get("/", homepage);
+userRoutes.get("/products", showproducts);
 userRoutes.route("/carts").get(showcartpage);
 
 userRoutes

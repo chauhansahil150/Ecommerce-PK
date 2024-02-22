@@ -137,13 +137,11 @@
                 
                 <label for="">ADRESSLINE2</label>
                 <input type="text" id="adressline2" name="ADRESSLINE2">
-                <label for="">PAN IMAGE</label>
-                <input type="file" id="panimage" name="panimage">
+                
            
                 <label for="">COUNTRY</label>
                 <input type="text" id="country" name="country">
-                <label for="">ADHAR IMAGE</label>
-                <input type="file" id="adharimg" name="adharimg">
+               
 
                 <label for="">PINCODE</label>
                 <input type="text" id="pincode" name="pincode">
@@ -153,7 +151,7 @@
             <div class="action">
                 <button type="submit"> signup</button>
                 <p id="message"></p>
-                <a href=""> LOGIN HERE</a>
+                <a href="/login"> LOGIN HERE</a>
             </div>
         </form>
     </div>
@@ -164,9 +162,9 @@
         const email = document.getElementById("email");
         const password = document.getElementById("password");
         const adharnumber = document.getElementById("adharnumber");
-        const adharimg = document.getElementById("adharimg");
+        // const adharimg = document.getElementById("adharimg");
         const pannumber = document.getElementById("pannumber");
-        const panimage = document.getElementById("panimage");
+        // const panimage = document.getElementById("panimage");
         const adressline1 = document.getElementById("adressline1");
         const adressline2 = document.getElementById("adressline2");
         const city = document.getElementById("city");
@@ -185,9 +183,9 @@
             email: email.value,
             password: password.value,
             adharnumber: adharnumber.value,
-            adharimg: adharimg.value,
+            // adharimg: adharimg.value,
             pannumber: pannumber.value,
-            panimage: panimage.value,
+            // panimage: panimage.value,
             adressline1: adressline1.value,
             adressline2: adressline2.value,
             city: city.value,

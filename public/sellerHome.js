@@ -1,9 +1,9 @@
 function productCard(p) {
-  const container = document.getElementById("container");
-  const productContainer = document.createElement("productcontainer");
-  productContainer.className = "productcontainer";
-  productContainer.id = `productcontainer-${p.p_id}`;
-  productContainer.innerHTML = `
+    const container = document.getElementById("container");
+    const productContainer = document.createElement("productcontainer");
+    productContainer.className = "productcontainer";
+    productContainer.id = `productcontainer-${p.p_id}`;
+    productContainer.innerHTML = `
     <div class="imgcontainer">
                 <img
                     src="${p.image}"/>
@@ -16,90 +16,89 @@ function productCard(p) {
             <div class="paction">
                 <div class="des_button"><button onclick="updateProduct('${p.p_id}')"> UPDATE </button></div>
                 <div class="cart_button"><button onclick="deleteProduct('${p.p_id}')" > DELETE</button></div>
-            </div>
-    `;
-  container.appendChild(productContainer);
+            </div> `;
+    container.appendChild(productContainer);
 }
 
 let arr = [];
-function displayAllProducts(){
-    fetch("/seller/products",{
-        method:'get',
-        headers:{
-            authorization:localStorage.getItem("token")
+function displayAllProducts() {
+    fetch("/seller/products", {
+        method: 'get',
+        headers: {
+            authorization: localStorage.getItem("token")
         }
     })
-    .then(result=>{
-        if(result.status==401){
-            location.href=result.url;
-            return [];
-        }
-        return result.json();
-    })
-    .then(products=>{
-    console.log(products);
-    arr=products;
-    
-    arr.forEach(singleProduct => {
-        productCard(singleProduct)
-    });
-    })
+        .then(result => {
+            if (result.status == 401) {
+                location.href = result.url;
+                return [];
+            }
+            return result.json();
+        })
+        .then(products => {
+            console.log(products);
+            arr = products;
+
+            arr.forEach(singleProduct => {
+                productCard(singleProduct)
+            });
+        })
 }
 
 displayAllProducts();
 
-function updateProduct(id){
-    const name=document.getElementById(`pname-${id}`).value;
-    const des=document.getElementById(`pdes-${id}`).value;
-    const price=document.getElementById(`pprice-${id}`).value;
-    const stock=document.getElementById(`pstock-${id}`).value;
+function updateProduct(id) {
+    const name = document.getElementById(`pname-${id}`).value;
+    const des = document.getElementById(`pdes-${id}`).value;
+    const price = document.getElementById(`pprice-${id}`).value;
+    const stock = document.getElementById(`pstock-${id}`).value;
     console.log(name);
     console.log(des);
     console.log(price);
     console.log(stock);
-    const updatedProduct={
+    const updatedProduct = {
         name,
         des,
         price,
         stock
     }
     console.log(updatedProduct);
-    fetch(`/seller/product?p_id=${id}`,{
-        method:'put',
-        headers:{
-            'content-type':'application/json',
-            authorization:localStorage.getItem("token")
+    fetch(`/seller/product?p_id=${id}`, {
+        method: 'put',
+        headers: {
+            'content-type': 'application/json',
+            authorization: localStorage.getItem("token")
         },
-        body:JSON.stringify(updatedProduct)
+        body: JSON.stringify(updatedProduct)
     })
-    .then(res=>{
-        if(res.status==200){
-            alert('product updated successfully');
-            return;
-        }
-        if(res.status==500){
-            alert('Internal Server Error');
-            return;
-        }
-    })
-    .catch(err=>{
-        console.log(err);
-    })
+        .then(res => {
+            if (res.status == 200) {
+                alert('product updated successfully');
+                return;
+            }
+            if (res.status == 500) {
+                alert('Internal Server Error');
+                return;
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        })
 }
 
-function deleteProduct(id){
-    const productContainer=document.getElementById(`productcontainer-${id}`)
-    fetch(`/seller/product?p_id=${id}`,{
-        method:'delete',
-        headers:{
-            authorization:localStorage.getItem("token")
+function deleteProduct(id) {
+    const productContainer = document.getElementById(`productcontainer-${id}`)
+    fetch(`/seller/product?p_id=${id}`, {
+        method: 'delete',
+        headers: {
+            authorization: localStorage.getItem("token")
         }
-    }).then(res=>{
-        if(res.status==200){
+    }).then(res => {
+        if (res.status == 200) {
             alert('product deleted successfully');
             productContainer.remove();
         }
-        if(res.status==500){
+        if (res.status == 500) {
             alert('Internal Server Error');
             return;
         }
@@ -108,14 +107,14 @@ function deleteProduct(id){
         arr=newData;
         displayAllProducts();*/
     })
-    .catch(err=>{
-        console.log(err);
-    })
+        .catch(err => {
+            console.log(err);
+        })
 
 }
 
-function logout(){
-    location.href='/login';
+function logout() {
+    location.href = '/login';
     localStorage.removeItem("token");
 
 }

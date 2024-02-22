@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        #msg{
+            color:red;
+            text-align: center;        }
+            
              .header {
             width: 100%;
             height: 14vh;
@@ -160,6 +164,7 @@
             </div>
         </div>
     </div>
+    <h2 id="msg"> </h2>
     <div class="container" id="container">
         <!-- <div class="order">
             <div class="one">
@@ -239,6 +244,13 @@
         })
         .then(data=>{
             console.log(data);
+            const msg=document.getElementById("msg");
+            if (data.length==0){
+                msg.innerText = "No Orders Yet"
+                return
+                
+            }
+            msg.style.display="none";
           data.forEach(o => {
             orderCard(o);
           });
