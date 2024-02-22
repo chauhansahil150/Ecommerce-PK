@@ -1,3 +1,17 @@
+function createPagination(items, itemperPage) {
+    console.log(items, itemperPage)
+    {
+      $('#pagination').pagination({
+        items: items,
+        itemsOnPage: itemperPage,
+        onPageClick: function (pageNo) {
+          fetchAndDisplayProducts(pageNo);
+        }
+      });
+    }
+  }
+  createPagination(100,10);
+
 function productCard(p) {
     const container = document.getElementById("container");
     const productContainer = document.createElement("productcontainer");

@@ -59,7 +59,7 @@ const findUser = (email) => {
 
 const createUser = (user) => {//signup
     return new Promise((resolve, reject) => {
-        const qry = `insert into users values("${user.id}","${user.name}","${user.email}","${user.password}","${user.phone}","user")`
+        const qry = `insert into users (u_id,name,email,password,phone,role) values("${user.id}","${user.name}","${user.email}","${user.password}","${user.phone}","user")`
         sql.query(qry, (err, res) => {//query execte
             (err) ? reject(err) : resolve(res)
 

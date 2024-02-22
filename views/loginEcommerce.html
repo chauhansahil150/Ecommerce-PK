@@ -61,8 +61,7 @@
 
         .username,
         .password {
-            display: flex;
-            justify-content: space-between;
+           
             /* background-color: aliceblue; */
             margin: 20px;
             font-weight: 700;
@@ -87,6 +86,11 @@
            border-radius: 12px; 
            width:auto;
         }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 
@@ -97,9 +101,13 @@
     <div class="logincontainer">
         <H1>LOGIN</H1>
         <div class="username">
-            Username:<input type="text" name="" id="email"> </div>
+            Username:<input type="text" name="" id="email"> 
+            <div id="emailError" class="error-message"></div>
+        </div>
         <div class="password">
-            Password: <input type="text" name="" id="password"> </div>
+            Password: <input type="password" name="" id="password"> 
+        </div>
+        <p id="passwordError" class="error-message"></p>
         <div class="btn">
             <button id="login" >LOGIN</button>
         </div>
@@ -112,19 +120,42 @@
 
 
 <script>
+
+
+// Validate email input
+function validateEmail() {
+    const email = document.getElementById("email").value.trim();
+    const emailError = document.getElementById("emailError");
+    emailError.textContent = "";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        emailError.textContent = "Invalid email address";
+        return false;
+    }
+    return true;
+}
+
+// Validate password input
+function validatePassword() {
+    const password = document.getElementById("password").value.trim();
+    const passwordError = document.getElementById("passwordError");
+    passwordError.textContent = "";
+    // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    // if (!passwordRegex.test(password)) {
+    //     passwordError.textContent = "Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character";
+    //     return false;
+    // }
+    if(password==''){
+        passwordError.textContent = "Please Enter Password";
+        return false
+    }
+    return true;
+}
+
     document.getElementById("login").addEventListener("click", () => {
+      if(validateEmail() && validatePassword()){
         const email = document.getElementById("email");
-
         const password = document.getElementById("password");
-        if (email.value == "") {
-            alert("please  enter the email");
-            return
-        }
-        if (password.value == "") {
-            alert("please  enter the password");
-            return
-
-        }
         fetch("/login",{
             method:"POST",
             headers :{
@@ -156,6 +187,7 @@
             console.log(err);
 
         });
+      }
     })
 </script>
 

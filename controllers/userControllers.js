@@ -168,7 +168,7 @@ const usersignup = async (req, res) => {
       message: "successfully signup",
     });
   } catch (error) {
-    console.log(error.errno);
+    console.log(error);
     if (error.errno == 1062) {
       res.status(403).end();
     } else {

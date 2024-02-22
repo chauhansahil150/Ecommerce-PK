@@ -99,6 +99,11 @@
             background-color: azure;
             box-shadow:0px 0x 12px grey;
         }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
     </style>
 
 
@@ -109,52 +114,86 @@
         <form id="form">
             <h1>SELLER SIGNUP FORM</h1>
             <div class="form">
-                <label for="">Name </label>
-                <input type="text" id="name" name="name">
-                <label for="">CITY</label>
-                <input type="text" id="city">
-
-       
-
-                <label for="">EMAIL</label>
-                <input type="text" id="email" name="email">
-                
-                <label for="">STATE</label>
-                <input type="text" id="state" name="state">
-               
-
-                <label for="">PASSWORD</label>
-                <input type="password" id="password" name="password">
-                <label for="">ADHAR CARD</label>
-                <input type="text" id="adharnumber" name="adharnumber">
-
- 
-                <label for="">ADRESSLINE1</label>
-                <input type="text" id="adressline1" name="adressline1">
-                <label for="">PAN CARD</label>
-                <input type="text" id="pannumber" name="pannumber">
-
-                
-                <label for="">ADRESSLINE2</label>
-                <input type="text" id="adressline2" name="ADRESSLINE2">
-                
-           
-                <label for="">COUNTRY</label>
-                <input type="text" id="country" name="country">
-               
-
-                <label for="">PINCODE</label>
-                <input type="text" id="pincode" name="pincode">
-                <label for="">PHONE NUMBER</label>
-                <input type="text" id="phonenumber" name="phonenumber">
+                <label for="name">Name</label>
+                <div class="">
+                    <input type="text" id="name" name="name">
+                    <span class="error-message" id="nameError"></span>
+                </div>
+    
+                <label for="city">City</label>
+                <div class="">
+                    <input type="text" id="city" name="city">
+                    <span class="error-message" id="cityError"></span>
+                </div>
+    
+                <label for="email">Email</label>
+                <div class="">
+                    <input type="text" id="email" name="email">
+                    <span class="error-message" id="emailError"></span>
+                </div>
+    
+                <label for="state">State</label>
+                <div class="">
+                    <input type="text" id="state" name="state">
+                    <span class="error-message" id="stateError"></span>
+                </div>
+    
+                <label for="password">Password</label>
+                <div class="">
+                    <input type="password" id="password" name="password">
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+    
+                <label for="adharnumber">Aadhar Card</label>
+                <div class="">
+                    <input type="text" id="adharnumber" name="adharnumber">
+                    <span class="error-message" id="adharnumberError"></span>
+                </div>
+    
+                <label for="adressline1">Address Line 1</label>
+                <div class="">
+                    <input type="text" id="adressline1" name="adressline1">
+                    <span class="error-message" id="adressline1Error"></span>
+                </div>
+    
+                <label for="pannumber">Pan Card</label>
+                <div class="">
+                    <input type="text" id="pannumber" name="pannumber">
+                    <span class="error-message" id="pannumberError"></span>
+                </div>
+    
+                <label for="adressline2">Address Line 2</label>
+                <div class="">
+                    <input type="text" id="adressline2" name="adressline2">
+                    <span class="error-message" id="adressline2Error"></span>
+                </div>
+    
+                <label for="country">Country</label>
+                <div class="">
+                    <input type="text" id="country" name="country">
+                    <span class="error-message" id="countryError"></span>
+                </div>
+    
+                <label for="pincode">Pincode</label>
+                <div class="">
+                    <input type="text" id="pincode" name="pincode">
+                    <span class="error-message" id="pincodeError"></span>
+                </div>
+    
+                <label for="phonenumber">Phone Number</label>
+                <div class="">
+                    <input type="text" id="phonenumber" name="phonenumber">
+                    <span class="error-message" id="phonenumberError"></span>
+                </div>
             </div>
             <div class="action">
-                <button type="submit"> signup</button>
+                <button type="submit">Signup</button>
                 <p id="message"></p>
-                <a href="/login"> LOGIN HERE</a>
+                <a href="/login">Login Here</a>
             </div>
         </form>
     </div>
+    
     <script>
         const message=document.getElementById("message");
         const form = document.getElementById("form");
@@ -171,14 +210,166 @@
         const state = document.getElementById("state");
         const pincode = document.getElementById("pincode");
         const phonenumber = document.getElementById("phonenumber");
-        console.log(name.value);
-       
+     // Define validation functions
+function validateName() {
+    const name = document.getElementById("name");
+    const nameError = document.getElementById("nameError");
+    if (name.value.trim() === "") {
+        nameError.innerText = "Name is required";
+        return false;
+    } else {
+        nameError.innerText = "";
+        return true;
+    }
+}
+
+function validateEmail() {
+    const email = document.getElementById("email");
+    const emailError = document.getElementById("emailError");
+    emailError.textContent = "";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.value.trim())) {
+        emailError.textContent = "Invalid email address";
+        return false;
+    }
+    return true;
+}
+
+function validatePassword() {
+    const password = document.getElementById("password").value.trim();
+    const passwordError = document.getElementById("passwordError");
+    passwordError.textContent = "";
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    if (!passwordRegex.test(password)) {
+        passwordError.textContent = "Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character";
+        return false;
+    }
+    return true;
+}
+
+function validateAadharNumber() {
+    const adharnumber = document.getElementById("adharnumber");
+    const adharnumberError = document.getElementById("adharnumberError");
+    if (adharnumber.value.trim() === "") {
+        adharnumberError.innerText = "Aadhar Card number is required";
+        return false;
+    } else {
+        adharnumberError.innerText = "";
+        return true;
+    }
+}
+
+function validateAddressLine1() {
+    const adressline1 = document.getElementById("adressline1");
+    const adressline1Error = document.getElementById("adressline1Error");
+    if (adressline1.value.trim() === "") {
+        adressline1Error.innerText = "Address Line 1 is required";
+        return false;
+    } else {
+        adressline1Error.innerText = "";
+        return true;
+    }
+}
+
+function validatePanNumber() {
+    const pannumber = document.getElementById("pannumber");
+    const pannumberError = document.getElementById("pannumberError");
+    if (pannumber.value.trim() === "") {
+        pannumberError.innerText = "Pan Card number is required";
+        return false;
+    } else {
+        pannumberError.innerText = "";
+        return true;
+    }
+}
+
+function validateAddressLine2() {
+    const adressline2 = document.getElementById("adressline2");
+    const adressline2Error = document.getElementById("adressline2Error");
+    if (adressline2.value.trim() === "") {
+        adressline2Error.innerText = "adressline2 is required";
+        return false;
+    } else {
+        adressline2Error.innerText = "";
+        return true;
+    }}
+
+function validateCity() {
+    const city = document.getElementById("city");
+    const cityError = document.getElementById("cityError");
+    if (city.value.trim() === "") {
+        cityError.innerText = "city is required";
+        return false;
+    } else {
+        cityError.innerText = "";
+        return true;
+    }
+}
+
+function validateState() {
+    const state = document.getElementById("state");
+    const stateError = document.getElementById("stateError");
+    if (state.value.trim() === "") {
+        stateError.innerText = "state is required";
+        return false;
+    } else {
+        stateError.innerText = "";
+        return true;
+    }
+}
+
+function validateCountry() {
+    const country = document.getElementById("country");
+    const countryError = document.getElementById("countryError");
+    if (country.value.trim() === "") {
+        countryError.innerText = "country is required";
+        return false;
+    } else {
+        countryError.innerText = "";
+        return true;
+    }
+
+}
+
+function validatePincode() {
+    const pincode = document.getElementById("pincode");
+    const pincodeError = document.getElementById("pincodeError");
+    if (pincode.value.trim() === "") {
+        pincodeError.innerText = "pincode is required";
+        return false;
+    } else {
+        pincodeError.innerText = "";
+        return true;
+    }
+}
+
+function validatePhoneNumber() {
+    const phonenumber = document.getElementById("phonenumber");
+    const phonenumberError = document.getElementById("phonenumberError");
+    if (phonenumber.value.trim() === "") {
+        phonenumberError.innerText = "phonenumber is required";
+        return false;
+    } else {
+        phonenumberError.innerText = "";
+        return true;
+    }
+}
+
+        document.getElementById("name").addEventListener("blur", validateName);
+
 
         // console.log(formdata);
         // console.log(name);
+
+        function validateForm() {
+            return validateName() && validateCity() && validateEmail() && validateState() && validatePassword() &&
+                validateAadharNumber() && validateAddressLine1() && validatePanNumber() && validateAddressLine2() &&
+                validateCountry() && validatePincode() && validatePhoneNumber();
+        }
         form.addEventListener("submit", (e) => {
             e.preventDefault();
-            const formdata = {
+            if(validateForm()){
+                const formdata = {
             name: name.value,
             email: email.value,
             password: password.value,
@@ -202,7 +393,7 @@
                 body: JSON.stringify(formdata)
             }).then((data) => {
                 if(data.status== 403){
-                    alert("Email already exist");
+                    message.innerText="Email already exist"
                 }
                 if(data.ok){
                     message.innerText="SIGNUP SUCESSFULLY";
@@ -212,6 +403,8 @@
                 console.log(err);
 
             });
+            }
+           
 
         })
 

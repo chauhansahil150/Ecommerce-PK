@@ -16,8 +16,6 @@
     .header {
       width: 100%;
       height: 14vh;
-      /* box-shadow: 0px 0px 15px grey; */
-      /* background-color: rgb(253, 251, 248); */
       display: flex;
       flex-direction: column;
       position: sticky;
@@ -34,7 +32,6 @@
       align-items: center;
       font-weight: bolder;
       color: grey;
-      /* background-color: #ac260b; */
     }
 
     .lowerheader {
@@ -48,37 +45,9 @@
     .action {
       width: 60%;
       height: 100%;
-      /* background-color: beige; */
       display: flex;
       align-items: center;
-
     }
-
-    .log_con {
-      /* background-color: brown; */
-      display: flex;
-      justify-content: end;
-      align-items: center;
-      margin-left: 140px;
-      height: 100%;
-    }
-
-  
-    #back {
-      margin: 8px 40px;
-      font-weight: bolder;
-      font-size: 14px;
-      text-decoration: none;
-      color: white;
-
-
-    }
-
-    #back:hover {
-      text-decoration: underline;
-      color: darkblue;
-    }
-
 
     .container {
       max-width: 600px;
@@ -111,7 +80,6 @@
 
     input[type="submit"] {
       background-image: linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74));
-
       color: white;
       padding: 15px 20px;
       border: none;
@@ -124,6 +92,12 @@
     input[type="submit"]:hover {
       background-color: #ac260b;
     }
+
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin-top: 5px;
+    }
   </style>
 </head>
 
@@ -134,8 +108,6 @@
 
       <div class="lowerheader">
         <div class="action">
-
-          <!-- <a href="/carts" id="cart">CART</a> -->
         </div>
       </div>
     </div>
@@ -143,22 +115,27 @@
       <h1>Address Information</h1>
       <form id="form">
         <label for="phone">Phone Number:</label>
-        <input type="text" id="phone" name="phone" required>
+        <input type="text" id="phone" name="phone" >
+        <span class="error-message" id="phoneError"></span>
 
         <label for="line1">Address Line 1:</label>
-        <input type="text" id="line1" name="line1" required>
+        <input type="text" id="line1" name="line1" >
+        <span class="error-message" id="line1Error"></span>
 
         <label for="line2">Address Line 2:</label>
         <input type="text" id="line2" name="line2">
-
+        
         <label for="city">City:</label>
-        <input type="text" id="city" name="city" required>
+        <input type="text" id="city" name="city" >
+        <span class="error-message" id="cityError"></span>
 
         <label for="state">State:</label>
-        <input type="text" id="state" name="state" required>
+        <input type="text" id="state" name="state" >
+        <span class="error-message" id="stateError"></span>
 
         <label for="pincode">Pincode:</label>
-        <input type="text" id="pincode" name="pincode" required>
+        <input type="text" id="pincode" name="pincode" >
+        <span class="error-message" id="pincodeError"></span>
 
         <label for="payment">Payment Mode:</label>
         <select id="payment" name="payment">
@@ -173,18 +150,78 @@
     </div>
 
     <script>
-
       const form = document.getElementById("form");
+      const phone = document.getElementById("phone");
       const line1 = document.getElementById("line1");
-      const line2 = document.getElementById("line2");
       const city = document.getElementById("city");
       const state = document.getElementById("state");
       const pincode = document.getElementById("pincode");
-      const phone = document.getElementById("phone");
-      const paymentMode = document.getElementById('payment');;
-      form.addEventListener("submit", (e) => {
+      const paymentMode=document.getElementById('payment');
+
+      function validatePhone() {
+        const phone = document.getElementById("phone").value.trim();
+        const phoneError = document.getElementById("phoneError");
+    phoneError.textContent = "";
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phone)) {
+        phoneError.textContent = "Phone number must be 10 digits";
+        return false;
+    }
+    return true;
+      }
+
+      function validateLine1() {
+        const line1Error = document.getElementById("line1Error");
+        if (line1.value.trim() === "") {
+          line1Error.innerText = "Address Line 1 is required";
+          return false;
+        } else {
+          line1Error.innerText = "";
+          return true;
+        }
+      }
+
+      function validateCity() {
+        const cityError = document.getElementById("cityError");
+        if (city.value.trim() === "") {
+          cityError.innerText = "City is required";
+          return false;
+        } else {
+          cityError.innerText = "";
+          return true;
+        }
+      }
+
+      function validateState() {
+        const stateError = document.getElementById("stateError");
+        if (state.value.trim() === "") {
+          stateError.innerText = "State is required";
+          return false;
+        } else {
+          stateError.innerText = "";
+          return true;
+        }
+      }
+
+      function validatePincode() {
+        const pincodeError = document.getElementById("pincodeError");
+        if (pincode.value.trim() === "") {
+          pincodeError.innerText = "Pincode is required";
+          return false;
+        } else {
+          pincodeError.innerText = "";
+          return true;
+        }
+      }
+
+      function validateForm() {
+        return validatePhone() && validateLine1() && validateCity() && validateState() && validatePincode();
+      }
+
+      form.addEventListener("submit", (e)=> {
         e.preventDefault();
-        const formdata = {
+        if (validateForm()) {
+          const formdata = {
           line1: line1.value,
           line2: line2.value,
           city: city.value,
@@ -211,9 +248,8 @@
           console.log(err);
 
         });
-
-      })
-
+        }
+      });
       function displayMessage() {
         const message = document.getElementById('message');
         message.innerHTML = `

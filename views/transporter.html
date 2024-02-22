@@ -91,7 +91,7 @@
             <div class="left">
             </div>
             <div class="righth">
-                <a onclick="logout()" href="">Logout</a>
+                <a onclick="logout()" >Logout</a>
             </div>
         </div>
     </div>
@@ -179,10 +179,10 @@
     });
 }
 
-// function logout(){
-//     location.href="/login";
-//     localStorage.removeItem("token");
-// }
+function logout(){
+    location.href="/login";
+    localStorage.removeItem("token");
+}
 
 
 </script>

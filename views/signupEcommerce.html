@@ -6,27 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signup</title>
     <style>
-          .all {
+        .all {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         }
+
         .header {
             width: 100%;
             height: 10vh;
-            /* box-shadow: 0px 0px 15px grey; */
-            box-shadow: 0 2px 25px rgba(0,0,0,0.1);
-
-            /* background-color: rgb(253, 251, 248); */
+            box-shadow: 0 2px 25px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             justify-content: center;
             position: sticky;
             top: 0;
-            border-radius :10px;
+            border-radius: 10px;
         }
+
         .upperheader {
             width: 100%;
             height: 60%;
@@ -36,37 +35,33 @@
             justify-content: center;
             align-items: center;
             font-weight: bolder;
-            color:grey
-
+            color: grey
         }
-        h1{ 
-            background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));
-            border:none;
-            border-radius: 5px;
-            color:white;
-            width:30%;
-            text-align: center;
 
+        h1 {
+            background-image: linear-gradient(rgb(109, 169, 203), rgb(90, 93, 143));
+            border: none;
+            border-radius: 5px;
+            color: white;
+            width: 30%;
+            text-align: center;
         }
 
         input {
             box-shadow: 0px 1px 2px grey;
             border: none;
             border-radius: 2px;
-            margin-left:10px;
-
+            margin-left: 10px;
         }
 
         .signupcontainer {
             margin-top: 80px;
             width: 60%;
             height: 60vh;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* padding: 20px 7px; */
-            /* background-color: aqua; */
         }
 
         .name,
@@ -74,120 +69,173 @@
         .username,
         .email,
         .phone {
-            display: flex;
+          
             width: 300px;
-            justify-content: space-between;
             margin: 20px;
             font-weight: 700;
             font-size: 110%;
-            /* background-color: aliceblue; */
         }
-        .btn{
-            width:10%; 
+
+        .btn {
+            width: 10%;
         }
+
         #signupbtn {
-           background-image: linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74));
-           color:white;
-           border:none;
-           padding:15px;
-           font-weight: bolder;
-           border-radius: 12px; 
-           width:auto;
+            background-image: linear-gradient(rgb(248, 94, 94), rgb(74, 1, 74));
+            color: white;
+            border: none;
+            padding: 15px;
+            font-weight: bolder;
+            border-radius: 12px;
+            width: auto;
         }
-        
-      
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .msg{
+            color: green;
+        }
+        .err{
+            color: red;
+        }
     </style>
-
-
 </head>
 
 <body>
     <div class="all">
         <div class="header">
-            <div class="upperheader"> WELCOME TO ABC </div></div>
+            <div class="upperheader"> WELCOME TO ABC </div>
+        </div>
 
-    
-
-    <div class="signupcontainer">
-     <h1>SIGNUP</h1>
-        <div class="name">
-            Name:<input type="text" id="name">
-        </div>
-        <div class="username">
-            Email:<input type="text" id="email">
-        </div>
-        <div class="password">
-            Password:<input type="text" id="password">
-        </div>
-        <div class="phone">
-            Phone No:<input type="text" id="phone">
-        </div>
-        <div class="btn">
-            <button id="signupbtn" onclick="handleSubmit()" style="font-weight: 600;">SIGNUP</button>
-        </div>
-        <div class="">
-            want to become a seller?
-            <a href="/seller/signup">Click Here</a>
-        </div>
-        <div>
-            <a href="/login"> Already a member?</a>
+        <div class="signupcontainer">
+            <h1>SIGNUP</h1>
+            <div class="name">
+                Name:<input type="text" id="name">
+                <div id="nameError" class="error-message"></div>
+            </div>
+            <div class="username">
+                Email:<input type="text" id="email">
+                <div id="emailError" class="error-message"></div>
+            </div>
+            <div class="password">
+                Password:<input type="password" id="password">
+                <div id="passwordError" class="error-message"></div>
+            </div>
+            <div class="phone">
+                Phone No:<input type="text" id="phone">
+                <div id="phoneError" class="error-message"></div>
+            </div>
+            <div class="btn">
+                <button id="signupbtn" onclick="handleSubmit()" style="font-weight: 600;">SIGNUP</button>
+            </div>
+            <p class="msg"></p>
+            <!-- <p class="err"></p> -->
+            <div>
+                want to become a seller?
+                <a href="/seller/signup">Click Here</a>
+            </div>
+            <div>
+                <a href="/login"> Already a member?</a>
+            </div>
         </div>
     </div>
-</div>
 
-    <script>
-        const name = document.getElementById("name")
-        const email = document.getElementById("email")
-        const password = document.getElementById("password")
-        const phone = document.getElementById("phone")
+ <script>
+    // Validate name input
+function validateName() {
+    const name = document.getElementById("name").value.trim();
+    const nameError = document.getElementById("nameError");
+    nameError.textContent = "";
+    if (name === "") {
+        nameError.textContent = "Please enter the name";
+        return false;
+    }
+    return true;
+}
 
-        function handleSubmit() {
-            console.log(name.value.length);
-            if(name.value.trim()=="" ){
-                alert("Please enter the name");
-                return
-            }
-            if(name.value.length <2){
-                alert("Please enter the valid length");
-                return
-            }
-            
-            if(email.value.trim()==""){
-                alert("Please enter the Email");
-                return
-            }
-            if(password.value.trim()==""){
-                alert("Please enter the Password");
-                return
-            }
-            if(name.phone.trim()==""){
-                alert("Please enter the name");
-                return
-            }
+// Validate email input
+function validateEmail() {
+    const email = document.getElementById("email").value.trim();
+    const emailError = document.getElementById("emailError");
+    emailError.textContent = "";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        emailError.textContent = "Invalid email address";
+        return false;
+    }
+    return true;
+}
 
-            fetch("/signup", {
-                method: "POST",
-                headers: {
-                    "content-type": "application/JSON"
-                },
-                body: JSON.stringify({
-                    name: name.value,
-                    email: email.value,
-                    password: password.value,
-                    phone: phone.value
-                })
-            }).then((result) => {
-                console.log(result);
-                if(result.status==403){
-                    alert("email already exists")
-                }
+// Validate password input
+function validatePassword() {
+    const password = document.getElementById("password").value.trim();
+    const passwordError = document.getElementById("passwordError");
+    passwordError.textContent = "";
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    if (!passwordRegex.test(password)) {
+        passwordError.textContent = "Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character";
+        return false;
+    }
+    return true;
+}
 
-            }).catch((err) => {
-                console.log(err)
-            });
-        }
-    </script>
+// Validate phone input
+function validatePhone() {
+    const phone = document.getElementById("phone").value.trim();
+    const phoneError = document.getElementById("phoneError");
+    phoneError.textContent = "";
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phone)) {
+        phoneError.textContent = "Phone number must be 10 digits";
+        return false;
+    }
+    return true;
+}
 
+// Attach event listeners to input fields
+document.getElementById("name").addEventListener("input", validateName);
+document.getElementById("email").addEventListener("input", validateEmail);
+document.getElementById("password").addEventListener("input", validatePassword);
+document.getElementById("phone").addEventListener("input", validatePhone);
+
+// Handle form submission
+function handleSubmit() {
+    if (validateName() && validateEmail() && validatePassword() && validatePhone()) {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+
+        fetch("/signup", {
+            method: "POST",
+            headers: {
+                "content-type": "application/JSON"
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                password,
+                phone
+            })
+        }).then((result) => {
+            if (result.status == 403) {
+                const msg=document.getElementsByClassName('msg')[0];
+                msg.innerText='email already exists';
+            }else if(result.status==200){
+                const msg=document.getElementsByClassName('msg')[0];
+                msg.innerText='Signup successfully'
+            }
+        }).catch((err) => {
+            console.log(err)
+        });
+    }
+}
+
+ </script>
+   
 </body>
 
 </html>
