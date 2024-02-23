@@ -404,7 +404,7 @@
             <div class="sum_container">
                 <div class="datasumcontainer">
                     <div id="totalprice">
-                        <p id="t_price">0</p>
+                        <p id="t_price">₹0</p>
                     </div>
                     <div id="order_btn"><button id="buyNow">Buy Now</button>
                     </div>
@@ -465,7 +465,7 @@
                                 </div>
                                 <div class="c_price"  id="price${cart.p_id}">₹${cart.price * cart.quantity}</div>
                             </div>
-                            <div class="delbtn" onclick='deleteCart("${cart.p_id}")'> <button>X</button></div>`;
+                            <div class="delbtn" onclick='deleteCart("${cart.p_id}",${cart.price},${cart.quantity})'> <button>X</button></div>`;
         document.getElementById("cart_container").appendChild(container);
     }
 
@@ -480,6 +480,7 @@
     }
 
     async function changeQuantity(id, price, quantity) {
+        console.log(price)
         if (quantity > 5 || quantity < 1) {
             alert("Quantity limit reached")
             return
@@ -491,16 +492,9 @@
                     "authorization": localStorage.getItem("token")
                 }
             })
-            if (!res.ok) {
-                alert("Something went wrong")
-                return
-            }
-        } catch (error) {
-            console.log(error);
-            alert(error)
-            return
-        }
-        const index = cartArr.findIndex(cart => cart.p_id == id)
+
+            if(res.ok){
+                const index = cartArr.findIndex(cart => cart.p_id == id)
         if (index < 0) {
             return
         }
@@ -512,6 +506,12 @@
         document.getElementById("quant" + id).innerText = quantity
         document.getElementById("price" + id).innerText ="₹"+ quantity * price
         document.getElementById("t_price").innerText = "₹"+ total_price
+            }
+        } catch (error) {
+            console.log(error);
+            return
+        }
+       
     }
 
     async function deleteCart(id) {
@@ -525,16 +525,21 @@
             })
             if (res.ok) {
                 alert("Product deleted from cart")
-            } else {
-                alert("Something went wrong")
-            }
-            const price = document.getElementById(`price${id}`).innerText;
+                const price = document.getElementById(`price${id}`).innerText.replace("₹","");
             const t_price = document.getElementById('t_price')
             console.log(price)
             console.log(t_price)
             console.log(Number(t_price.innerText) - Number(price))
-            t_price.innerText ="₹"+ Number(t_price.innerText) - Number(price)
+            t_price.innerText ="₹"+(t_price.innerText.replace("₹","") - price);
+            console.log(cartArr)
+            const arr=cartArr.filter(c=>c.p_id!=id)
+            console.log(arr);
+            cartArr=arr
             document.getElementById("cont" + id).remove()
+            } else {
+                alert("Something went wrong")
+            }
+            
         } catch (error) {
             alert(error)
             console.log(error);
