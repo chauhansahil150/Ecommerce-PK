@@ -250,7 +250,7 @@
       <div  id='status-${p.o_id}'>order status:${(p.status==null)?"pending":p.status}</div>
       <h2>${p.name}</h2>
       <p>Quantity: ${p.quantity}</p>
-      <p>Total Price: ${p.total_amount}</p>
+      <p>Total Price:₹ ${p.total_amount}</p>
       <p>Payment Mode ${p.payment_mode}</p>
     </div>`
     }
@@ -263,7 +263,7 @@
       <div  id='status-${p.o_id}'>order status:${(p.status==null)?"pending":p.status}</div>
       <h2>${p.name}</h2>
       <p>Quantity: ${p.quantity}</p>
-      <p>Total Price: ${p.total_amount}</p>
+      <p>Total Price:₹ ${p.total_amount}</p>
       <p>Payment Mode ${p.payment_mode}</p>
       <div class="order-buttons">
         <button id="cancel-${p.o_id}" onclick="cancelOrderBtn('${p.o_id}')" class="button cancel">Cancel Order</button>

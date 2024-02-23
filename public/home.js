@@ -22,7 +22,7 @@ function productCard(p) {
                                             src="${p.image}" />
                                     </div>
                                     <div class="pname" id="pname-${p.p_id}"> ${p.name}</div>
-                                    <div class="pprice" id="pprice-${p.p_id}">${p.price}</div>
+                                    <div class="pprice" id="pprice-${p.p_id}">₹${p.price}</div>
                                     <div class="paction">
                                         <div class="des_button"> <button onclick="showDesc('${p.p_id}')"> View description</button></div>
                                         <div class="cart_button"><button onclick="addtoCart('${p.p_id}')"> Add to cart</button></div>
