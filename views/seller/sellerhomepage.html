@@ -96,8 +96,8 @@
            
 
         .container {
-            height:70vh;
             width: 100%;
+            height: auto;
             /* background-color: rgb(223, 0, 0); */
             display: grid;
             grid-template-columns: repeat(4,350px);
@@ -260,6 +260,9 @@
 
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/simplePagination.min.css">
 </head>
 
 <body>
@@ -282,52 +285,18 @@
     </div>
     <div class="container" id="container">
 
-        <!-- <div class="productcontainer">
-            <div class="imgcontainer">
-                <img
-                    src="https://image-us.samsung.com/us/smartphones/galaxy-s24/gallery/FNL_Gallery_Base_800x600_Slide_Exclusive_Colors_1.jpg?$product-details-jpg$" />
-            </div>
-            <div class="pname"><input type="text" placeholder="Name"></div>
-            <div class="pdes"><input type="text"placeholder="description"></div>
-            <div class="pprice"><input type="text"placeholder="Price"></div>
-            <div class="pstock"><input type="text"placeholder="Stock"></div>
-    
-            <div class="paction">
-                <div class="des_button"><button> UPDATE </button></div>
-                <div class="cart_button"><button> DELETE </button></div>
-            </div>
-        </div> -->
-        <!-- <div class="productcontainer">
-            <div class="imgcontainer">
-                <img
-                    src="https://image-us.samsung.com/us/smartphones/galaxy-s24/gallery/FNL_Gallery_Base_800x600_Slide_Exclusive_Colors_1.jpg?$product-details-jpg$" />
-            </div>
-            <div class="pname"><input type="text" placeholder="Name"></div>
-            <div class="pdes"><input type="text"placeholder="description"></div>
-            <div class="pprice"><input type="text"placeholder="Price"></div>
-            <div class="pstock"><input type="text"placeholder="Stock"></div>
-    
-            <div class="paction">
-                <div class="des_button"><button> UPDATE </button></div>
-                <div class="cart_button"><button> DELETE</button></div>
-            </div>
-        </div> -->
-        <!-- <div class="productcontainer">
-            <div class="imgcontainer">
-                <img
-                    src="https://image-us.samsung.com/us/smartphones/galaxy-s24/gallery/FNL_Gallery_Base_800x600_Slide_Exclusive_Colors_1.jpg?$product-details-jpg$" />
-            </div>
-            <div class="pname"><input type="text" placeholder="Name"></div>
-            <div class="pdes"><input type="text"placeholder="description"></div>
-            <div class="pprice"><input type="text"placeholder="Price"></div>
-            <div class="pstock"><input type="text"placeholder="Stock"></div>
-    
-            <div class="paction">
-                <div class="des_button"><button> UPDATE </button></div>
-                <div class="cart_button"><button> DELETE</button></div>
-            </div>
-        </div> -->
     </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; height: 40px; width: 100vw;">
+        <label for="" style="margin-right: 10px;">Select Items</label>
+        <select name="no_of_products" id="no_of_products">
+          <option value="4">4</option>
+          <option value="8">8</option>
+          <option value="12">12</option>
+        </select>
+        <div id="pagination" style="margin-left: 40px;"></div>
+    </div>
+
     <script src="/sellerHome.js"></script>
 </body>
 </html>

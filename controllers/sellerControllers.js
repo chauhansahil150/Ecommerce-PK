@@ -118,7 +118,9 @@ const getOrdersPage=(req,res)=>{
 const getsellerproducts = async (req, res) => {
   try {
     var decoded = jwt.verify(req.headers.authorization, "payal");
-    const productdata = await getsellerproductquery(decoded.u_id);
+    const start = parseInt(req.query.start) || 0;
+    const noOfProducts=parseInt(req.query.no_of_products) || 4;
+    const productdata = await getsellerproductquery(decoded.u_id,start,noOfProducts);
     console.log(productdata);
     res.status(200).json(productdata);
   } catch (err) {

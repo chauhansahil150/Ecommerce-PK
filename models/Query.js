@@ -11,10 +11,10 @@ function saveProduct(product) {
 }
 
 
-function fetchProducts() {
+function fetchProducts(start,limit) {
     return new Promise((resolve, reject) => {
-        const qry = "select * from products where isApproved=1";
-        sql.query(qry, (err, data) => {
+        const qry = "select * from products where isApproved=1 limit ?,?";
+        sql.query(qry,[start,limit], (err, data) => {
             (err) ? reject(err) : resolve(data)
         })
     })
@@ -129,12 +129,13 @@ function saveaddress(userId, body,address_id) {
         if (err) {
           reject(err);
         } else {
+          console.log(results)
           const query = `INSERT INTO orders (o_id,u_id,p_id,s_id,a_id, quantity, total_amount,payment_mode)
               values (?,?,?,?,?,?,?,?)`;
           sql.query(
             query,
             [
-                order_id,
+              order_id,
               userId,
               cartProduct.p_id,
               results[0].seller_id,

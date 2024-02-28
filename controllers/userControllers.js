@@ -64,7 +64,9 @@ const loginUser = async (req, res) => {
 
 const showproducts = async (req, res) => {
   try {
-    const data = await fetchProducts();
+    const start = parseInt(req.query.start) || 0;
+    const noOfProducts=parseInt(req.query.no_of_products) || 4;
+    const data = await fetchProducts(start,noOfProducts);
     res.status(200).json(data);
   } catch (error) {
     console.log(error);

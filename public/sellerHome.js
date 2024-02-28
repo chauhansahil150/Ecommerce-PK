@@ -1,3 +1,5 @@
+const container=document.getElementById('container')
+const noOfProducts = document.getElementById('no_of_products');
 function productCard(p) {
     const container = document.getElementById("container");
     const productContainer = document.createElement("productcontainer");
@@ -21,8 +23,10 @@ function productCard(p) {
 }
 
 let arr = [];
-function displayAllProducts() {
-    fetch("/seller/products", {
+function fetchAndDisplayProducts(pageNo) {
+    container.innerHTML=``;
+    const noOfProducts = document.getElementById('no_of_products').value;
+    fetch(`/seller/products?start=${pageNo}&no_of_products=${noOfProducts}`, {
         method: 'get',
         headers: {
             authorization: localStorage.getItem("token")
@@ -45,7 +49,25 @@ function displayAllProducts() {
         })
 }
 
-displayAllProducts();
+function createPagination(items, itemperPage) {
+    console.log(items, itemperPage)
+    {
+      $('#pagination').pagination({
+        items: items,
+        itemsOnPage: itemperPage,
+        onPageClick: function (pageNo) {
+          fetchAndDisplayProducts(pageNo);
+        }
+      });
+    }
+  }
+  createPagination(100,4);
+  noOfProducts.addEventListener('change', () => {
+    createPagination(100, noOfProducts.value);
+    fetchAndDisplayProducts(1);
+  });
+  fetchAndDisplayProducts(4);
+
 
 function updateProduct(id) {
     const name = document.getElementById(`pname-${id}`).value;

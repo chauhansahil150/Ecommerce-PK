@@ -1,16 +1,5 @@
-function createPagination(items, itemperPage) {
-    console.log(items, itemperPage)
-    {
-      $('#pagination').pagination({
-        items: items,
-        itemsOnPage: itemperPage,
-        onPageClick: function (pageNo) {
-          fetchAndDisplayProducts(pageNo);
-        }
-      });
-    }
-  }
-  createPagination(100,10);
+const container=document.getElementById('container')
+const noOfProducts = document.getElementById('no_of_products');
 
 function productCard(p) {
     const container = document.getElementById("container");
@@ -97,7 +86,10 @@ function addtoCart(id) {
     });
 }
 let onlinearray = [];
-fetch("/products")
+function fetchAndDisplayProducts(pageNo){
+    container.innerHTML='';
+    const noOfProducts = document.getElementById('no_of_products').value;
+    fetch(`/products?start=${pageNo}&no_of_products=${noOfProducts}`)
     .then((result) => {
         return result.json();
     }).then((data) => {
@@ -122,10 +114,30 @@ fetch("/products")
         //     onlinearray.push(obj);
         });
 
-    }).catch(err=>[
+    }).catch(err=>{
         console.log(err)
 
-    ]);
+    });
+}
+function createPagination(items, itemperPage) {
+    console.log(items, itemperPage)
+    {
+      $('#pagination').pagination({
+        items: items,
+        itemsOnPage: itemperPage,
+        onPageClick: function (pageNo) {
+          fetchAndDisplayProducts(pageNo);
+        }
+      });
+    }
+  }
+  createPagination(100,10);
+  fetchAndDisplayProducts(4);
+
+  noOfProducts.addEventListener('change', () => {
+    createPagination(100, noOfProducts.value);
+    fetchAndDisplayProducts(1);
+  });
 
 function logout(){
     localStorage.removeItem("token");

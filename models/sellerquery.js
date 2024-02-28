@@ -27,10 +27,10 @@ function savesellerdetailAddress(data){
   })
 }
 
-function getsellerproductquery(sellerid) {
+function getsellerproductquery(sellerid,start,limit) {
   return new Promise((resolve, reject) => {
-    const qry = `select * from products where seller_id =?`;
-    sql.query(qry, [sellerid], (err, data) => {
+    const qry = `select * from products where seller_id =? LIMIT ?,?`;
+    sql.query(qry, [sellerid,start,limit], (err, data) => {
       err ? reject(err) : resolve(data);
     });
   });
